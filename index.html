@@ -5,8 +5,8 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 <script src="https://www.gstatic.com/firebasejs/5.7.3/firebase.js"></script>
 <link href="https://fonts.googleapis.com/css?family=Mitr" rel="stylesheet">
+
 <script>
-	
 	
 var connect;
   // Initialize Firebase
@@ -98,7 +98,7 @@ var connect;
    }
    #con{
 		display: none;
-		position: absolute;
+		position: relative;
 		width: 90%;
 		bottom: 0;
 		background-color: #fff;
@@ -120,8 +120,8 @@ var connect;
 	}
 	#screen{
 		overflow:scroll;
-		height: 530px;
-		max-height: 600px;
+		
+		height: 370px;
 	}
 	p{
 		margin-left:15px; 
@@ -161,8 +161,14 @@ var connect;
 		border-radius: 15px;
 	}
 </style>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+
 </head>
+
 <body>
+<link href="https://afeld.github.io/emoji-css/emoji.css" rel="stylesheet">
+
+<i class="em em-some-emoji"></i>
 	<div id="input">
 		<center>
 			<div style="display: block;height: 100px;">
@@ -182,7 +188,7 @@ var connect;
 
 	<div id="con" >
 		<center>
-	<input type="" name="" id="result" style="width: 50%" placeholder="ข้อความ...">
+	<input type="" name="" id="result" style="width: 30%;" placeholder="ข้อความ...">
     <button onclick="send()">ส่งข้อความ</button>
     <br>
     <br>
@@ -196,6 +202,8 @@ var connect;
     send();
   }
 });
+
      </script>
+     
 </body>
 </html>
