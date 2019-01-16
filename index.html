@@ -1,1 +1,189 @@
-404
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="https://www.gstatic.com/firebasejs/5.7.3/firebase.js"></script>
+<link href="https://fonts.googleapis.com/css?family=Mitr" rel="stylesheet">
+<script>
+	
+	
+var connect;
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyC4dogP1e8BtQWf4YAilx-3HLTzRbB1lhQ",
+    authDomain: "chat-3a9ca.firebaseapp.com",
+    databaseURL: "https://chat-3a9ca.firebaseio.com",
+    projectId: "chat-3a9ca",
+    storageBucket: "chat-3a9ca.appspot.com",
+    messagingSenderId: "707420213129"
+  };
+  firebase.initializeApp(config);
+  
+  function connect(){
+  	connect=document.getElementById("text").value;
+  	document.getElementById("input").style.display="none";
+  	document.getElementById("main").style.display="block";
+  	document.getElementById("con").style.display="block";
+
+  	let ref=firebase.database().ref(connect);
+    ref.once("value",function(snapshot){
+    	snapshot.forEach(function(ss){
+    		ss.forEach(function(ee){
+    			let element=document.createElement("p");
+  	            let textnode=document.createTextNode(ee.val());
+  	            element.appendChild(textnode);
+  	            document.getElementById("screen").appendChild(element);
+    		});
+      
+    	});
+  	  
+    },function(err){
+
+    });
+    let t=document.getElementById("screen");
+  	t.scrollTo(0,4000);
+  }
+
+  function send(){
+  	
+  	
+  	let content=document.getElementById("result").value;
+  	let ref=firebase.database().ref(connect);
+  	ref.push({
+  		ข้อความ:"ชื่อผู้ใช้ "+connect+" : "+content
+  	});
+  	document.getElementById("result").value="";
+  	ref.once("value",function(snapshot){
+  		let main=document.getElementById("main");
+  		let screen=document.getElementById("screen");
+  		main.removeChild(screen);
+  		let create=document.createElement("div");
+  		create.setAttribute("id","screen");
+  		document.getElementById("main").appendChild(create);
+    	snapshot.forEach(function(ss){
+    		
+    		ss.forEach(function(ee){
+    			let element=document.createElement("p");
+  	            let textnode=document.createTextNode(ee.val());
+  	            element.appendChild(textnode);
+  	            document.getElementById("screen").appendChild(element);
+  	            let t=document.getElementById("screen");
+  		        t.scrollTo(0,4000);
+    		});
+      
+    	});
+  	  
+    },function(err){
+
+    });
+  }
+</script>
+<style type="text/css">
+   @keyframes show{
+   	 0%{transform:scale(1,1);}
+   	 50%{transform:scale(1.1,1.1);}
+   	 100%{transform:scale(1,1);}
+   }
+   #input{
+   	animation-name: show;
+   	animation-duration: 5s;
+   	animation-iteration-count: infinite;
+   }
+   img{
+   	
+   }
+   #con{
+		display: none;
+		position: absolute;
+		width: 90%;
+		bottom: 0;
+		background-color: #fff;
+		padding: 5px;
+	}
+	#main{
+		display: none;
+
+	}
+    ::-webkit-scrollbar{
+		width: 10px;
+	}
+	::-webkit-scrollbar-track{
+		background-color: #fff;
+		
+	}
+	::-webkit-scrollbar-thumb{
+		background-color: #fff;
+	}
+	#screen{
+		overflow:scroll;
+		height: 530px;
+		max-height: 600px;
+	}
+	p{
+		margin-left:15px; 
+		color:#581845;
+		postion:relative;
+		font-family: 'Mitr', sans-serif;
+		width: 60%;
+		background-image:linear-gradient(#BE9FD8,#6dd0f7);
+		padding: 10px 25px;
+		border-radius:10px 10px 10px 0px;
+
+	}
+	p:hover{
+		opacity: 0.5;
+	}
+	button{
+		font-family: 'Mitr', sans-serif;
+		background-color: #581845;
+		padding: 10px 25px;
+		border:3px solid #581845;
+		color:#fff;
+		border-radius: 15px;
+		outline:none;
+		transition:all 0.5s ease;
+	}
+	button:hover{
+		background-color: #fff;
+		border:3px solid #fff;
+		color:#581845;
+	}
+	input{
+		outline:none;
+		font-family: 'Mitr', sans-serif;
+		background-color: #fff;
+		padding: 10px 25px;
+		border:3px solid #581845;
+		border-radius: 15px;
+	}
+</style>
+</head>
+<body>
+	<div id="input">
+		<center>
+			<div style="display: block;height: 100px;">
+				
+			</div>
+			<img src="https://sites.google.com/a/thk.ac.th/kruekk/_/rsrc/1545383981793/favicon.ico"><br>
+	    <input type="" name="" id="text" placeholder="กรุณากรอกชื่อ">
+        <button onclick="connect()">เชื่อมต่อ</button>
+    </center>
+	</div>
+	
+	<div id="main">
+		<div id="screen" >
+			
+		</div>
+	</div>
+
+	<div id="con" >
+		<center>
+	<input type="" name="" id="result" style="width: 50%" placeholder="ข้อความ...">
+    <button onclick="send()">ส่งข้อความ</button>
+    <br>
+    <br>
+     </center>
+     </div>
+</body>
+</html>
