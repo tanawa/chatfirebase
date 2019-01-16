@@ -45,16 +45,7 @@ var connect;
   	t.scrollTo(0,4000);
   }
 
-let input=document.getElementById("result");
-  input.addEventListener("keyup", function(event) {
-  // Cancel the default action, if needed
-  event.preventDefault();
-  // Number 13 is the "Enter" key on the keyboard
-  if (event.keyCode === 13) {
-    // Trigger the button element with a click
-    send();
-  }
-});
+
 
 
   function send(){
@@ -138,7 +129,7 @@ let input=document.getElementById("result");
 		postion:relative;
 		font-family: 'Mitr', sans-serif;
 		width: 60%;
-		background-image:linear-gradient(#BE9FD8,#6dd0f7);
+		/*background-image:linear-gradient(#BE9FD8,#6dd0f7);*/
 		padding: 10px 25px;
 		border-radius:10px 10px 10px 0px;
 
@@ -197,5 +188,14 @@ let input=document.getElementById("result");
     <br>
      </center>
      </div>
+     <script type="text/javascript">
+     	var input=document.getElementById("result");
+ input.addEventListener("keyup", function(event) {
+  event.preventDefault();
+  if (event.keyCode === 13) {
+    send();
+  }
+});
+     </script>
 </body>
 </html>
