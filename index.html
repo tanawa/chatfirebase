@@ -5,7 +5,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 <script src="https://www.gstatic.com/firebasejs/5.7.3/firebase.js"></script>
 <link href="https://fonts.googleapis.com/css?family=Mitr" rel="stylesheet">
-
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
 <script>
 	
 var connect;
@@ -28,12 +28,35 @@ var connect;
 
   	let ref=firebase.database().ref(connect);
     ref.once("value",function(snapshot){
+    	let main=document.getElementById("main");
+  		let screen=document.getElementById("screen");
+  		main.removeChild(screen);
+  		let create=document.createElement("div");
+  		create.setAttribute("id","screen");
+  		document.getElementById("main").appendChild(create);
     	snapshot.forEach(function(ss){
+    		
     		ss.forEach(function(ee){
+    			let num=ee.val();
+    			num=num.search("L458");
+    			console.log(num);
+    			if(num>=1){
+    				$(function(){
+    					let img=document.createElement("img");
+    					let te=ee.val().split('L458');
+    					img.setAttribute("src",te[1]);
+    					document.getElementById("screen").appendChild(img);
+    				
+    				});
+    				
+    			}else{
     			let element=document.createElement("p");
   	            let textnode=document.createTextNode(ee.val());
   	            element.appendChild(textnode);
   	            document.getElementById("screen").appendChild(element);
+  	            let t=document.getElementById("screen");
+  		        t.scrollTo(0,4000);
+  		        }
     		});
       
     	});
@@ -45,6 +68,54 @@ var connect;
   	t.scrollTo(0,4000);
   }
 
+
+  function sendimg(){
+  	
+  	
+  	let content=document.getElementById("result").value;
+  	let ref=firebase.database().ref(connect);
+  	ref.push({
+  		ข้อความ:"ชื่อผู้ใช้ "+connect+" : "+"L458"+content
+  	});
+  	document.getElementById("result").value="";
+  	ref.once("value",function(snapshot){
+  		let main=document.getElementById("main");
+  		let screen=document.getElementById("screen");
+  		main.removeChild(screen);
+  		let create=document.createElement("div");
+  		create.setAttribute("id","screen");
+  		document.getElementById("main").appendChild(create);
+    	snapshot.forEach(function(ss){
+    		
+    		ss.forEach(function(ee){
+    			let num=ee.val();
+    			num=num.search("L458");
+    			console.log(num);
+    			if(num>=1){
+    				$(function(){
+    					let img=document.createElement("img");
+    					let te=ee.val().split('L458');
+    					img.setAttribute("src",te[1]);
+    					document.getElementById("screen").appendChild(img);
+    				
+    				});
+    				
+    			}else{
+    			let element=document.createElement("p");
+  	            let textnode=document.createTextNode(ee.val());
+  	            element.appendChild(textnode);
+  	            document.getElementById("screen").appendChild(element);
+  	            let t=document.getElementById("screen");
+  		        t.scrollTo(0,4000);
+  		        }
+    		});
+      
+    	});
+  	  
+    },function(err){
+
+    });
+  }
 
 
 
@@ -67,12 +138,26 @@ var connect;
     	snapshot.forEach(function(ss){
     		
     		ss.forEach(function(ee){
+    			let num=ee.val();
+    			num=num.search("L458");
+    			console.log(num);
+    			if(num>=1){
+    				$(function(){
+    					let img=document.createElement("img");
+    					let te=ee.val().split('L458');
+    					img.setAttribute("src",te[1]);
+    					document.getElementById("screen").appendChild(img);
+    				
+    				});
+    				
+    			}else{
     			let element=document.createElement("p");
   	            let textnode=document.createTextNode(ee.val());
   	            element.appendChild(textnode);
   	            document.getElementById("screen").appendChild(element);
   	            let t=document.getElementById("screen");
   		        t.scrollTo(0,4000);
+  		        }
     		});
       
     	});
@@ -123,6 +208,15 @@ var connect;
 		
 		height: 370px;
 	}
+	img{
+		width: 30%;
+	}
+	a{
+		color:#581845;
+		font-family: 'Mitr', sans-serif;
+		text-decoration: none;
+		font-size: 15px;
+	}
 	p{
 		margin-left:15px; 
 		color:#581845;
@@ -161,22 +255,22 @@ var connect;
 		border-radius: 15px;
 	}
 </style>
-<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+
 
 </head>
 
 <body>
-<link href="https://afeld.github.io/emoji-css/emoji.css" rel="stylesheet">
-
-<i class="em em-some-emoji"></i>
 	<div id="input">
 		<center>
-			<div style="display: block;height: 100px;">
+			<div style="display: block;height: 80px;">
 				
 			</div>
 			<img src="https://sites.google.com/a/thk.ac.th/kruekk/_/rsrc/1545383981793/favicon.ico"><br>
 	    <input type="" name="" id="text" placeholder="กรุณากรอกชื่อ">
         <button onclick="connect()">เชื่อมต่อ</button>
+        <br><br>
+        <a href="#">สมัครสมาชิก</a>
+        <br>
     </center>
 	</div>
 	
@@ -188,8 +282,8 @@ var connect;
 
 	<div id="con" >
 		<center>
-	<input type="" name="" id="result" style="width: 50%;" placeholder="ข้อความ...">
-    <button onclick="send()">ส่งข้อความ</button>
+	<input type="" name="" id="result" style="width: 30%;" placeholder="ข้อความ...">
+    <button onclick="send()">ส่งข้อความ</button>&nbsp;<button onclick="sendimg()">ส่งurl</button>
     <br>
     <br>
      </center>
