@@ -1,4 +1,5 @@
-var fileContent = 'sample text'; // As a sample, upload a text file.
+<script>
+    var fileContent = 'sample text'; // As a sample, upload a text file.
 var file = new Blob([fileContent], {type: 'text/plain'});
 var metadata = {
     'name': 'sampleName', // Filename at Google Drive
@@ -19,3 +20,5 @@ xhr.onload = () => {
     console.log(xhr.response.id); // Retrieve uploaded file ID.
 };
 xhr.send(form);
+
+</script>
