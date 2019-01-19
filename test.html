@@ -16,7 +16,5 @@ var connect;
   firebase.initializeApp(config);
   var ref=firebase.database().ref();
 var file = $('input').val(); // use the Blob or File API
-ref.put(file).then(function(snapshot) {
-  console.log('Uploaded a blob or file!');
-});
+ref.put(file);
 </script>
