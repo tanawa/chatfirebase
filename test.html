@@ -1,6 +1,21 @@
 <input type="file" >
+<script src="https://www.gstatic.com/firebasejs/5.7.3/firebase.js"></script>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
 <script>
-var file = ... // use the Blob or File API
+	
+var connect;
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyC4dogP1e8BtQWf4YAilx-3HLTzRbB1lhQ",
+    authDomain: "chat-3a9ca.firebaseapp.com",
+    databaseURL: "https://chat-3a9ca.firebaseio.com",
+    projectId: "chat-3a9ca",
+    storageBucket: "chat-3a9ca.appspot.com",
+    messagingSenderId: "707420213129"
+  };
+  firebase.initializeApp(config);
+  var ref=firebase.database().ref();
+var file = $('input').val(); // use the Blob or File API
 ref.put(file).then(function(snapshot) {
   console.log('Uploaded a blob or file!');
 });
