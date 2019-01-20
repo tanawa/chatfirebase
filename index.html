@@ -27,13 +27,23 @@ var connect;
   	document.getElementById("con").style.display="block";
 
   	let ref=firebase.database().ref(connect);
-    ref.once("value",function(snapshot){
+    ref.on("value",function(snapshot){
     	let main=document.getElementById("main");
   		let screen=document.getElementById("screen");
   		main.removeChild(screen);
   		let create=document.createElement("div");
   		create.setAttribute("id","screen");
   		document.getElementById("main").appendChild(create);
+    		let nums=Object.keys(snapshot.val());
+    		if(nums.length>=50){
+    			ref.remove();
+    			ref.push({
+  		           ข้อความ:"ระบบ  : "+"ล้างข้อความ"
+  	            });
+    		}else{
+    			console.log(nums.length);
+    			console.log("ไม่เกิน"+nums.length);
+    		}
     	snapshot.forEach(function(ss){
     		
     		ss.forEach(function(ee){
@@ -47,6 +57,7 @@ var connect;
     					img.setAttribute("src",te[1]);
     					document.getElementById("screen").appendChild(img);
     				    let t=document.getElementById("screen");
+    				    $("#screen").append("<br>");
     				t.scrollTo(0,4000);
     				
     				
@@ -59,6 +70,7 @@ var connect;
   		        t.scrollTo(0,4000);
   		        }
     		});
+
       
     	});
   	  
@@ -79,95 +91,20 @@ var connect;
   		ข้อความ:"ชื่อผู้ใช้ "+connect+" : "+"L458"+content
   	});
   	document.getElementById("result").value="";
-  	ref.once("value",function(snapshot){
-  		let main=document.getElementById("main");
-  		let screen=document.getElementById("screen");
-  		main.removeChild(screen);
-  		let create=document.createElement("div");
-  		create.setAttribute("id","screen");
-  		document.getElementById("main").appendChild(create);
-    	snapshot.forEach(function(ss){
-    		
-    		ss.forEach(function(ee){
-    			let num=ee.val();
-    			num=num.search("L458");
-    			console.log(num);
-    			if(num>=1){
-    				$(function(){
-    					let img=document.createElement("img");
-    					let te=ee.val().split('L458');
-    					img.setAttribute("src",te[1]);
-    					document.getElementById("screen").appendChild(img);
-    					let t=document.getElementById("screen");
-    				t.scrollTo(0,4000);
-    				});
-    				
-    			}else{
-    			let element=document.createElement("p");
-  	            let textnode=document.createTextNode(ee.val());
-  	            element.appendChild(textnode);
-  	            document.getElementById("screen").appendChild(element);
-  	            let t=document.getElementById("screen");
-  		        t.scrollTo(0,4000);
-  		        }
-    		});
-      
-    	});
-  	  
-    },function(err){
-
-    });
+  	
   }
 
 
 
   function send(){
-  	
-  	
+
   	let content=document.getElementById("result").value;
   	let ref=firebase.database().ref(connect);
   	ref.push({
   		ข้อความ:"ชื่อผู้ใช้ "+connect+" : "+content
   	});
   	document.getElementById("result").value="";
-  	ref.once("value",function(snapshot){
-  		let main=document.getElementById("main");
-  		let screen=document.getElementById("screen");
-  		main.removeChild(screen);
-  		let create=document.createElement("div");
-  		create.setAttribute("id","screen");
-  		document.getElementById("main").appendChild(create);
-    	snapshot.forEach(function(ss){
-    		
-    		ss.forEach(function(ee){
-    			let num=ee.val();
-    			num=num.search("L458");
-    			console.log(num);
-    			if(num>=1){
-    				$(function(){
-    					let img=document.createElement("img");
-    					let te=ee.val().split('L458');
-    					img.setAttribute("src",te[1]);
-    					document.getElementById("screen").appendChild(img);
-    					let t=document.getElementById("screen");
-    				     t.scrollTo(0,4000);
-    				});
-    				
-    			}else{
-    			let element=document.createElement("p");
-  	            let textnode=document.createTextNode(ee.val());
-  	            element.appendChild(textnode);
-  	            document.getElementById("screen").appendChild(element);
-  	            let t=document.getElementById("screen");
-  		        t.scrollTo(0,4000);
-  		        }
-    		});
-      
-    	});
-  	  
-    },function(err){
 
-    });
   }
 </script>
 <style type="text/css">
@@ -175,6 +112,35 @@ var connect;
    	 0%{transform:scale(1,1);}
    	 50%{transform:scale(1.1,1.1);}
    	 100%{transform:scale(1,1);}
+   }
+   .sticker{
+   	padding: 10px 25px;
+   	display: none;
+   	position: absolute;
+   	background-color: #401734;
+   	border:3px solid #401734;
+   	border-radius: 15px 15px 0px 0px;
+   }
+   .sticker>button{
+   	    font-family: 'Mitr', sans-serif;
+		background-color: #401734;
+		padding: 10px 25px;
+		border:3px solid #401734;
+		color:#fff;
+		border-radius: 15px;
+		outline:none;
+		transition:all 0.5s ease;
+   }
+   .sticker>img{
+   	border-radius: 15px;
+   	background-color: #fff;
+   	float: left;
+   	border:3px solid #581845;
+   	margin:5px;
+   	width: 20%;
+   }
+   .sticker>img:hover{
+   	opacity: 0.5;
    }
    #input{
    	animation-name: show;
@@ -209,7 +175,7 @@ var connect;
 	#screen{
 		overflow:scroll;
 		
-		height: 370px;
+		height: 360px;
 	}
 	img{
 		width: 30%;
@@ -257,6 +223,12 @@ var connect;
 		border:3px solid #581845;
 		border-radius: 15px;
 	}
+	.t {
+		opacity: 0.5;
+	}
+	.t :active{
+		opacity: 0.2;
+	}
 </style>
 
 
@@ -282,15 +254,35 @@ var connect;
 			
 		</div>
 	</div>
-
 	<div id="con" >
 		<center>
+			<table>
+				<tr>
+					<td>
+						<center>
+						<div class="sticker" >
+					<img src="http://khengoolestan.com/wp-content/uploads/2017/11/dance_bandari_9_azar_1396.gif" class="t-1" >
+					<button onclick="$('.sticker').css('display','none')">ปิด</button>
+		
+	        </div><br>
+</center>
+					</td>
+				</tr>
+				<tr>
+					<td>
+			<center>
 	<input type="" name="" id="result" style="width: 30%;" placeholder="ข้อความ...">
-    <button onclick="send()">ส่งข้อความ</button>&nbsp;<button onclick="sendimg()">ส่งurl</button>
+	
+    <button onclick="send()">ส่งข้อความ</button>&nbsp;<button onclick="$('.sticker').css('display','block');">สติ๊กเกอร์</button><!--<button onclick="sendimg()">ส่งurl</button>-->
     <br>
     <br>
-     </center>
+     
      </div>
+     </center>
+     </td>
+				</tr>
+			</table>
+			</center>
      <script type="text/javascript">
      	var input=document.getElementById("result");
  input.addEventListener("keyup", function(event) {
@@ -300,6 +292,17 @@ var connect;
   }
 });
 
+$(function(){
+
+$('.t-1').click(function(){
+    	let ref=firebase.database().ref(connect);
+  	    ref.push({
+  		ข้อความ:"ชื่อผู้ใช้ "+connect+" : L458http://khengoolestan.com/wp-content/uploads/2017/11/dance_bandari_9_azar_1396.gif"
+  	   });
+    });
+
+});
+ 
      </script>
      
 </body>
