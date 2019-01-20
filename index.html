@@ -62,10 +62,18 @@ var connect;
     				
     				
     			}else{
-    			let element=document.createElement("p");
+    			let nums=ee.val();
+    			console.log("ครูหนึ่ง"+nums.search("ครู"));
+  	            if(nums.search("ครูหนึ่ง")>=0){
+  	            	$("#screen").append("<img src='https://sites.google.com/a/thk.ac.th/kruekk/_/rsrc/1545383981793/favicon.ico' class='logo'><p class='kru'>"+ee.val()+"</p>");
+  	            	console.log("ครู");
+  	            }else{
+  	            
+  	            let element=document.createElement("p");
   	            let textnode=document.createTextNode(ee.val());
   	            element.appendChild(textnode);
   	            document.getElementById("screen").appendChild(element);
+  	            }
   	            
   		        }
     		});
@@ -112,6 +120,19 @@ var connect;
    	 0%{transform:scale(1,1);}
    	 50%{transform:scale(1.1,1.1);}
    	 100%{transform:scale(1,1);}
+   }
+   .logo{
+   	width: 6%;
+   }
+   .kru{
+   	margin-left:15px; 
+		color:#fff;
+		postion:relative;
+		font-family: 'Mitr', sans-serif;
+		width: 30%;
+		background-color: #581845;
+		padding: 10px 25px;
+		border-radius:0px 10px 10px 10px;
    }
    .sticker{
    	width: 60%;
