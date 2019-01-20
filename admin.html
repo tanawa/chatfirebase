@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet">
+<script src="https://www.gstatic.com/firebasejs/5.7.3/firebase.js"></script>
+<link href="https://fonts.googleapis.com/css?family=Mitr" rel="stylesheet">
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+<script>
+	
+var connect;
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyC4dogP1e8BtQWf4YAilx-3HLTzRbB1lhQ",
+    authDomain: "chat-3a9ca.firebaseapp.com",
+    databaseURL: "https://chat-3a9ca.firebaseio.com",
+    projectId: "chat-3a9ca",
+    storageBucket: "chat-3a9ca.appspot.com",
+    messagingSenderId: "707420213129"
+  };
+  firebase.initializeApp(config);
+
+
+
+
+
+let ref=firebase.database().ref();
+    ref.on("value",function(snapshot){
+    	let name=Object.keys(snapshot.val());
+    	let sele=document.getElementById("text");
+    	for(let i=0;i<name.length;i++){
+    		$("#text").append("<option>"+name[i]+"</option>");
+    	}
+    },function(err){
+
+    });
+
+
+
+
+
+
+
+  
+  function connect(){
+  	connect=document.getElementById("text").value;
+  	document.getElementById("input").style.display="none";
+  	document.getElementById("main").style.display="block";
+  	document.getElementById("con").style.display="block";
+
+  	let ref=firebase.database().ref(connect);
+    ref.on("value",function(snapshot){
+    	let main=document.getElementById("main");
+  		let screen=document.getElementById("screen");
+  		main.removeChild(screen);
+  		let create=document.createElement("div");
+  		create.setAttribute("id","screen");
+  		document.getElementById("main").appendChild(create);
+    		let nums=Object.keys(snapshot.val());
+    		if(nums.length>=50){
+    			ref.remove();
+    			ref.push({
+  		           ข้อความ:"ระบบ  : "+"ล้างข้อความ"
+  	            });
+    		}else{
+    			console.log(nums.length);
+    			console.log("ไม่เกิน"+nums.length);
+    		}
+    	snapshot.forEach(function(ss){
+    		
+    		ss.forEach(function(ee){
+    			let num=ee.val();
+    			num=num.search("L458");
+    			console.log(num);
+    			if(num>=1){
+    				
+    					let img=document.createElement("img");
+    					let te=ee.val().split('L458');
+    					img.setAttribute("src",te[1]);
+    					document.getElementById("screen").appendChild(img);
+    				    let t=document.getElementById("screen");
+    				
+    				
+    			}else{
+
+    			let nums=ee.val();
+    			console.log("ครูหนึ่ง"+nums.search("ครู"));
+  	            if(nums.search("ครูหนึ่ง")>=0){
+  	            	$("#screen").append("<img src='https://sites.google.com/a/thk.ac.th/kruekk/_/rsrc/1545383981793/favicon.ico' class='logo'><p class='kru'>"+ee.val()+"</p>");
+  	            	console.log("ครู");
+  	            }else{
+  	            
+  	            let element=document.createElement("p");
+  	            let textnode=document.createTextNode(ee.val());
+  	            element.appendChild(textnode);
+  	            document.getElementById("screen").appendChild(element);
+  	            }
+  		        }
+    		});
+
+      
+    	});
+  	  let t=document.getElementById("screen");
+  		        t.scrollTo(0,8000);
+    },function(err){
+
+    });
+    let t=document.getElementById("screen");
+  	t.scrollTo(0,4000);
+  }
+
+
+  function sendimg(){
+  	
+  	
+  	let content=document.getElementById("result").value;
+  	let ref=firebase.database().ref(connect);
+  	ref.push({
+  		ข้อความ:"ครูหนึ่ง  : "+"L458"+content
+  	});
+  	document.getElementById("result").value="";
+  	
+  }
+
+
+
+  function send(){
+
+  	let content=document.getElementById("result").value;
+  	let ref=firebase.database().ref(connect);
+  	ref.push({
+  		ข้อความ:"ครูหนึ่ง : "+content
+  	});
+  	document.getElementById("result").value="";
+
+  }
+</script>
+<style type="text/css">
+   @keyframes show{
+   	 0%{transform:scale(1,1);}
+   	 50%{transform:scale(1.1,1.1);}
+   	 100%{transform:scale(1,1);}
+   }
+   .sticker{
+   	width: 60%;
+   	padding: 10px;
+   	display: none;
+   	position: absolute;
+   	background-color: #36132C;
+   	border:3px solid #36132C;
+   	border-radius: 15px 15px 15px 15px;
+   }
+   .sticker>button{
+   	position: absolute;
+   	font-size: 20px;
+   	    font-family: 'Mitr', sans-serif;
+		background-color: #36132C;
+		padding: 10px;
+		color:#fff;
+		outline:none;
+		transition:all 0.5s ease;
+   }
+   .sticker>button:hover{
+   	position: absolute;
+   	font-size: 20px;
+   	    font-family: 'Mitr', sans-serif;
+		background-color: #36132C;
+		padding: 10px;
+		color:#fff;
+		outline:none;
+		transition:all 0.5s ease;
+   }
+   .sticker>img{
+   	border-radius: 15px;
+   	background-color: #fff;
+   	border:3px solid #43b9ea;
+   	margin:5px;
+   	width: 20%;
+   }
+   .sticker>img:hover{
+   	opacity: 0.5;
+   }
+   .logo{
+   	width: 6%;
+   }
+   .kru{
+   	margin-left:15px; 
+		color:#fff;
+		postion:relative;
+		font-family: 'Mitr', sans-serif;
+		width: 30%;
+		background-color: #581845;
+		padding: 10px 25px;
+		border-radius:0px 10px 10px 10px;
+   }
+   #input{
+   	animation-name: show;
+   	animation-duration: 5s;
+   	animation-iteration-count: infinite;
+   }
+   img{
+   	
+   }
+   #con{
+		display: none;
+		position: relative;
+		width: 90%;
+		bottom: 0;
+		background-color: #fff;
+		padding: 5px;
+	}
+	#main{
+		display: none;
+
+	}
+    ::-webkit-scrollbar{
+		width: 10px;
+	}
+	::-webkit-scrollbar-track{
+		background-color: #fff;
+		
+	}
+	::-webkit-scrollbar-thumb{
+		background-color: #fff;
+	}
+	#screen{
+		overflow:scroll;
+		
+		height: 360px;
+	}
+	img{
+		width: 30%;
+	}
+	a{
+		color:#581845;
+		font-family: 'Mitr', sans-serif;
+		text-decoration: none;
+		font-size: 15px;
+	}
+	p{
+		margin-left:15px; 
+		color:#581845;
+		postion:relative;
+		font-family: 'Mitr', sans-serif;
+		width: 60%;
+		/*background-image:linear-gradient(#BE9FD8,#6dd0f7);*/
+		padding: 10px 25px;
+		border-radius:10px 10px 10px 0px;
+
+	}
+	p:hover{
+		opacity: 0.5;
+	}
+	select{
+		font-family: 'Mitr', sans-serif;
+		background-color: #581845;
+		padding: 10px 25px;
+		border:3px solid #36132C;
+		color:#fff;
+		border-radius: 15px;
+		outline:none;
+		transition:all 0.5s ease;
+		box-shadow: 0px 5px 0px #36132C;
+	}
+	button{
+		font-family: 'Mitr', sans-serif;
+		background-color: #581845;
+		padding: 10px 25px;
+		border:3px solid #36132C;
+		color:#fff;
+		border-radius: 15px;
+		outline:none;
+		transition:all 0.5s ease;
+		box-shadow: 0px 5px 0px #36132C;
+	}
+	button:hover{
+		background-color: #fff;
+		border:3px solid #36132C;
+		color:#581845;
+	}
+	input{
+		outline:none;
+		box-shadow: 0px 5px 0px #36132C;
+		font-family: 'Mitr', sans-serif;
+		background-color: #fff;
+		padding: 10px 25px;
+		border:3px solid #36132C;
+		border-radius: 15px;
+	}
+	.t {
+		opacity: 0.5;
+	}
+	.t :active{
+		opacity: 0.2;
+	}
+	#result{
+		height: 20px;
+		line-height: 20px;
+		outline:none;
+		box-shadow: 0px 1px 0px #581845;
+		font-family: 'Mitr', sans-serif;
+		background-color: #581845;
+		padding: 10px;
+		color: #fff;
+		border:0px solid #581845;
+		border-radius: 15px;
+	}
+	#result:hover{
+		outline:none;
+		font-family: 'Mitr', sans-serif;
+		background-color: #581845;
+		color: #fff;
+		border:0px solid #581845;
+		border-radius: 15px;
+	}
+	#box{
+		height: 30px;
+		line-height: 30px;
+		outline:none;
+		box-shadow: 0px 5px 0px #581845;
+		font-family: 'Mitr', sans-serif;
+		background-color: #581845;
+		padding: 10px;
+		color: #fff;
+		border:0px solid #581845;
+		border-radius: 15px;
+	}
+	#box:hover{
+		outline:none;
+		box-shadow: 0px 5px 0px #581845;
+		font-family: 'Mitr', sans-serif;
+		background-color: #581845;
+		color: #fff;
+		border:0px solid #581845;
+		border-radius: 15px;
+	}
+	#box>i{
+		margin: 3px;
+	}
+</style>
+
+
+</head>
+
+<body>
+	<center>
+						<div class="sticker" >
+					<img src="http://khengoolestan.com/wp-content/uploads/2017/11/dance_bandari_9_azar_1396.gif" class="t-1" >
+					<img src="https://sv1.picz.in.th/images/2019/01/20/9MtJVe.gif" class="t-2" >
+					<button onclick="$('.sticker').css('display','none')"><i class="material-icons">cancel</i></button>
+		
+	        </div><br>
+</center>
+	<div id="input">
+		<center>
+			<div style="display: block;height: 80px;">
+				
+			</div>
+			<img src="https://sites.google.com/a/thk.ac.th/kruekk/_/rsrc/1545383981793/favicon.ico"><br>
+			<p>เลือกคนที่จะตอบกลับ</p>
+			<br>
+	    <select id="text">
+	    	
+	    </select>
+        <button onclick="connect()">เชื่อมต่อ</button>
+        <br><br>
+        <br>
+    </center>
+	</div>
+	
+	<div id="main">
+		<div id="screen" >
+			
+		</div>
+	</div>
+	<div id="con" >
+		<center>
+			<table>
+				<tr>
+					<td>
+						
+					</td>
+				</tr>
+				<tr>
+					<td>
+			<center>
+	<div id="box">
+	<input type="" name="" id="result" style="width: 60%;" placeholder="ข้อความ..." >
+	<i class="material-icons" onclick="send()">send</i>&nbsp;<i class="material-icons" onclick="$('.sticker').css('display','block');">insert_emoticon</i>
+	
+    <br>
+    <br>
+     
+     </div>
+     </center>
+     </td>
+				</tr>
+			</table>
+			</center>
+     <script type="text/javascript">
+     	var input=document.getElementById("result");
+ input.addEventListener("keyup", function(event) {
+  event.preventDefault();
+  if (event.keyCode === 13) {
+    send();
+  }
+});
+
+$(function(){
+
+$('.t-1').click(function(){
+    	let ref=firebase.database().ref(connect);
+  	    ref.push({
+  		ข้อความ:"ชื่อผู้ใช้ "+connect+" : L458http://khengoolestan.com/wp-content/uploads/2017/11/dance_bandari_9_azar_1396.gif"
+  	   });
+    });
+$('.t-2').click(function(){
+    	let ref=firebase.database().ref(connect);
+  	    ref.push({
+  		ข้อความ:"ชื่อผู้ใช้ "+connect+" : L458https://sv1.picz.in.th/images/2019/01/20/9MtJVe.gif"
+  	   });
+    });
+
+});
+ 
+     </script>
+     
+</body>
+</html>
