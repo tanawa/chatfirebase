@@ -81,10 +81,9 @@ let ref=firebase.database().ref();
     					img.setAttribute("src",te[1]);
     					document.getElementById("screen").appendChild(img);
     				    let t=document.getElementById("screen");
-    				
+    				$("#screen").append("<br>");
     				
     			}else{
-
     			let nums=ee.val();
     			console.log("ครูหนึ่ง"+nums.search("ครู"));
   	            if(nums.search("ครูหนึ่ง")>=0){
@@ -97,6 +96,7 @@ let ref=firebase.database().ref();
   	            element.appendChild(textnode);
   	            document.getElementById("screen").appendChild(element);
   	            }
+  	            
   		        }
     		});
 
