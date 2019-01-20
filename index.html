@@ -232,7 +232,7 @@ var connect;
 		outline:none;
 		box-shadow: 0px 5px 0px #36132C;
 		font-family: 'Mitr', sans-serif;
-		background-color: #581845;
+		background-color: #fff;
 		padding: 10px 25px;
 		border:3px solid #36132C;
 		border-radius: 15px;
@@ -242,6 +242,50 @@ var connect;
 	}
 	.t :active{
 		opacity: 0.2;
+	}
+	#result{
+		height: 20px;
+		line-height: 20px;
+		outline:none;
+		box-shadow: 0px 1px 0px #581845;
+		font-family: 'Mitr', sans-serif;
+		background-color: #581845;
+		padding: 10px;
+		color: #fff;
+		border:0px solid #581845;
+		border-radius: 15px;
+	}
+	#result:hover{
+		outline:none;
+		font-family: 'Mitr', sans-serif;
+		background-color: #581845;
+		color: #fff;
+		border:0px solid #581845;
+		border-radius: 15px;
+	}
+	#box{
+		height: 30px;
+		line-height: 30px;
+		outline:none;
+		box-shadow: 0px 5px 0px #581845;
+		font-family: 'Mitr', sans-serif;
+		background-color: #581845;
+		padding: 10px;
+		color: #fff;
+		border:0px solid #581845;
+		border-radius: 15px;
+	}
+	#box:hover{
+		outline:none;
+		box-shadow: 0px 5px 0px #581845;
+		font-family: 'Mitr', sans-serif;
+		background-color: #581845;
+		color: #fff;
+		border:0px solid #581845;
+		border-radius: 15px;
+	}
+	#box>i{
+		margin: 3px;
 	}
 </style>
 
@@ -286,9 +330,10 @@ var connect;
 				<tr>
 					<td>
 			<center>
-	<input type="" name="" id="result" style="width: 30%;" placeholder="ข้อความ...">
+	<div id="box">
+	<input type="" name="" id="result" style="width: 60%;" placeholder="ข้อความ..." >
+	<i class="material-icons" onclick="send()">send</i>&nbsp;<i class="material-icons" onclick="$('.sticker').css('display','block');">insert_emoticon</i>
 	
-    <button onclick="send()" class="material-icons">send</button>&nbsp;<button onclick="$('.sticker').css('display','block');" class="material-icons">insert_emoticon</button><!--<button onclick="sendimg()">ส่งurl</button>-->
     <br>
     <br>
      
