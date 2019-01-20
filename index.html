@@ -23,8 +23,13 @@ var connect;
   firebase.initializeApp(config);
   
   function connect(){
+
   	connect=document.getElementById("text").value;
-  	document.getElementById("input").style.display="none";
+  	if(connect="ผู้ดูแล"){
+  		window.location.href="https://tanawa.github.io/chatfirebase/admin.html";
+  	}else{
+
+  		document.getElementById("input").style.display="none";
   	document.getElementById("main").style.display="block";
   	document.getElementById("con").style.display="block";
 
@@ -87,6 +92,9 @@ var connect;
     });
     let t=document.getElementById("screen");
   	t.scrollTo(0,4000);
+
+  	}
+  	
   }
 
 
