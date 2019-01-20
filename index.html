@@ -3,6 +3,8 @@
 <head>
 	<title></title>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet">
 <script src="https://www.gstatic.com/firebasejs/5.7.3/firebase.js"></script>
 <link href="https://fonts.googleapis.com/css?family=Mitr" rel="stylesheet">
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
@@ -57,8 +59,6 @@ var connect;
     					img.setAttribute("src",te[1]);
     					document.getElementById("screen").appendChild(img);
     				    let t=document.getElementById("screen");
-    				    $("#screen").append("<br>");
-    				t.scrollTo(0,4000);
     				
     				
     			}else{
@@ -66,14 +66,14 @@ var connect;
   	            let textnode=document.createTextNode(ee.val());
   	            element.appendChild(textnode);
   	            document.getElementById("screen").appendChild(element);
-  	            let t=document.getElementById("screen");
-  		        t.scrollTo(0,4000);
+  	            
   		        }
     		});
 
       
     	});
-  	  
+  	  let t=document.getElementById("screen");
+  		        t.scrollTo(0,8000);
     },function(err){
 
     });
@@ -114,28 +114,40 @@ var connect;
    	 100%{transform:scale(1,1);}
    }
    .sticker{
-   	padding: 10px 25px;
+   	width: 60%;
+   	padding: 10px;
    	display: none;
    	position: absolute;
-   	background-color: #401734;
-   	border:3px solid #401734;
-   	border-radius: 15px 15px 0px 0px;
+   	background-color: #36132C;
+   	border:3px solid #36132C;
+   	border-radius: 15px 15px 15px 15px;
    }
    .sticker>button{
+   	position: absolute;
+   	font-size: 20px;
    	    font-family: 'Mitr', sans-serif;
-		background-color: #401734;
+		background-color: #36132C;
 		padding: 10px 25px;
-		border:3px solid #401734;
+		border:3px solid #36132C;
 		color:#fff;
-		border-radius: 15px;
 		outline:none;
 		transition:all 0.5s ease;
+		box-shadow: 0px 0px 0px #36132C;
+   }
+   .sticker>button:hover{
+   	    font-family: 'Mitr', sans-serif;
+		background-color: #36132C;
+		padding: 10px 25px;
+		border:3px solid #36132C;
+		color:#fff;
+		outline:none;
+		transition:all 0.5s ease;
+		box-shadow: 0px 0px 0px #36132C;
    }
    .sticker>img{
    	border-radius: 15px;
    	background-color: #fff;
-   	float: left;
-   	border:3px solid #581845;
+   	border:3px solid #43b9ea;
    	margin:5px;
    	width: 20%;
    }
@@ -204,23 +216,25 @@ var connect;
 		font-family: 'Mitr', sans-serif;
 		background-color: #581845;
 		padding: 10px 25px;
-		border:3px solid #581845;
+		border:3px solid #36132C;
 		color:#fff;
 		border-radius: 15px;
 		outline:none;
 		transition:all 0.5s ease;
+		box-shadow: 0px 5px 0px #36132C;
 	}
 	button:hover{
 		background-color: #fff;
-		border:3px solid #fff;
+		border:3px solid #36132C;
 		color:#581845;
 	}
 	input{
 		outline:none;
+		box-shadow: 0px 5px 0px #36132C;
 		font-family: 'Mitr', sans-serif;
-		background-color: #fff;
+		background-color: #581845;
 		padding: 10px 25px;
-		border:3px solid #581845;
+		border:3px solid #36132C;
 		border-radius: 15px;
 	}
 	.t {
@@ -235,6 +249,13 @@ var connect;
 </head>
 
 <body>
+	<center>
+						<div class="sticker" >
+					<img src="http://khengoolestan.com/wp-content/uploads/2017/11/dance_bandari_9_azar_1396.gif" class="t-1" >
+					<button onclick="$('.sticker').css('display','none')"><i class="material-icons">cancel</i></button>
+		
+	        </div><br>
+</center>
 	<div id="input">
 		<center>
 			<div style="display: block;height: 80px;">
@@ -259,13 +280,7 @@ var connect;
 			<table>
 				<tr>
 					<td>
-						<center>
-						<div class="sticker" >
-					<img src="http://khengoolestan.com/wp-content/uploads/2017/11/dance_bandari_9_azar_1396.gif" class="t-1" >
-					<button onclick="$('.sticker').css('display','none')">ปิด</button>
-		
-	        </div><br>
-</center>
+						
 					</td>
 				</tr>
 				<tr>
@@ -273,7 +288,7 @@ var connect;
 			<center>
 	<input type="" name="" id="result" style="width: 30%;" placeholder="ข้อความ...">
 	
-    <button onclick="send()">ส่งข้อความ</button>&nbsp;<button onclick="$('.sticker').css('display','block');">สติ๊กเกอร์</button><!--<button onclick="sendimg()">ส่งurl</button>-->
+    <button onclick="send()" class="material-icons">send</button>&nbsp;<button onclick="$('.sticker').css('display','block');" class="material-icons">insert_emoticon</button><!--<button onclick="sendimg()">ส่งurl</button>-->
     <br>
     <br>
      
