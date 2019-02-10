@@ -3,16 +3,24 @@
 <head>
 	<title></title>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link href="https://fonts.googleapis.com/css?family=Mitr" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
       rel="stylesheet">
-<script src="https://www.gstatic.com/firebasejs/5.7.3/firebase.js"></script>
-<link href="https://fonts.googleapis.com/css?family=Mitr" rel="stylesheet">
-<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
-<script>
-	
-var connect;
-  // Initialize Firebase
-  var config = {
+     <script src="https://www.gstatic.com/firebasejs/5.7.3/firebase.js"></script>
+     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+     <script type="text/javascript">
+     	var nameuser="",userchoose="";
+     	$(function(){
+     		var numberstudent;
+     		var testmix,Htest;
+     	var choosetest;
+     	var Menum=1;
+     	var scores=0;
+     	var tttt=0;
+     		
+     		var num;
+     		var truetest;
+     		var config = {
     apiKey: "AIzaSyC4dogP1e8BtQWf4YAilx-3HLTzRbB1lhQ",
     authDomain: "chat-3a9ca.firebaseapp.com",
     databaseURL: "https://chat-3a9ca.firebaseio.com",
@@ -21,383 +29,590 @@ var connect;
     messagingSenderId: "707420213129"
   };
   firebase.initializeApp(config);
+let ref=firebase.database().ref("post");
+ref.once("value",function(snapshot){
+	$(".contentshow>center>hr").remove();
+	$(".contentshow>center>p").remove();
+	snapshot.forEach(function(ee){
+		console.log(ee.val());
+		$(".contentshow>center").prepend("<div onclick='ment(\""+ee.key+"\")' class='hp'>กระทู้หัวข้อ "+ee.key+"</div><a onclick='deletes(\""+ee.key+"\")'>แจ้งลบกระทู้นี้</a><br><br>");
+	});
+},function(err){
+	
+});
+
+$(".back").click(function(){
+$("#main").css("display","block");
+	$("#ment").css("display","none");
+	$("#test").css("display","none");
+	$("#profile").css("display","none");
+});
+
+
+$(".m0").click(function(){
+	console.log("ยินดีต้อนรับ "+nameuser);
+$("#main").css("display","none");
+	$("#ment").css("display","none");
+	$("#test").css("display","none");
+	$("#profile").css("display","block");
+	let ref=firebase.database().ref("user/"+nameuser+"/username");
+	console.log("user/"+nameuser+"/username");
+    ref.once("value",function(snapshot){$("#usernameprofile").val(snapshot.val());},function(err){});
+    ref=firebase.database().ref("user/"+nameuser+"/password");
+    ref.once("value",function(snapshot){$("#passwordprofile").val(snapshot.val());},function(err){});
+    ref=firebase.database().ref("user/"+nameuser+"/name");
+    ref.once("value",function(snapshot){$("#name").val(snapshot.val());},function(err){});
+    ref=firebase.database().ref("user/"+nameuser+"/lastname");
+    ref.once("value",function(snapshot){$("#lastname").val(snapshot.val());},function(err){});
+    ref=firebase.database().ref("user/"+nameuser+"/numberstudent");
+    ref.once("value",function(snapshot){$("#numberstudent").val(snapshot.val());},function(err){});
+    ref=firebase.database().ref("user/"+nameuser+"/number");
+    ref.once("value",function(snapshot){$("#number").val(snapshot.val());},function(err){});
+    ref=firebase.database().ref("user/"+nameuser+"/year");
+    ref.once("value",function(snapshot){$("#year").val(snapshot.val());},function(err){});
+    ref=firebase.database().ref("user/"+nameuser+"/room");
+    ref.once("value",function(snapshot){$("#room").val(snapshot.val());},function(err){});
+});
+
+$(".m1").click(function(){
+$("#main").css("display","block");
+	$("#ment").css("display","none");
+	$("#test").css("display","none");
+	$("#profile").css("display","none");
+});
+
+$(".m2").click(function(){
+$("#main").css("display","none");
+	$("#ment").css("display","none");
+	$("#testout>p").remove();
+	$("#test").css("display","block");
+	$("#profile").css("display","none");
+    $("#testin").css("display","none");
+	$("#testout").css("display","block");
+	$("#testend").css("display","none");
+	let ref=firebase.database().ref("test/");
+ref.once("value",function(snapshot){
+	snapshot.forEach(function(t){
+		$("#testout").append("<p onclick='choose(\""+t.key+"\")'>"+t.key+"</p>");
+	});
+},function(err){
+	
+});
+
+});
   
-  function connect(){
+     	});
 
-  	connect=document.getElementById("text").value;
-  	if(connect=="ผู้ดูแล"){
-  		window.location.href="https://tanawa.github.io/chatfirebase/admin.html";
-  	}else{
+function save(){
+        if($("#usernameprofile").val()=="" || $("#passwordprofile").val()=="" || $("#year").val()=="" || $("#room").val()=="" || $("#name").val()=="" || $("#lastname").val()=="" || $("#number").val()=="" || $("#numberstudent").val()=="" ){
+          console.log("กรอกข้อมูลไม่ครบ");
+        }else{
 
-  		document.getElementById("input").style.display="none";
-  	document.getElementById("main").style.display="block";
-  	document.getElementById("con").style.display="block";
+        let ref=firebase.database().ref("user/"+name);
+     ref.update({
+      "username":name,
+      "password":$("#passwordprofile").val(),
+      "year":$("#year").val(),
+      "room":$("#room").val(),
+      "name":$("#name").val(),
+      "lastname":$("#lastname").val(),
+      "number":$("#number").val(),
+      "numberstudent":$("#numberstudent").val()
+        });
+     console.log("สำเร็จ");
+     alert("บันทึกสำเร็จ");
+      }
+}
+  	
+    
 
-  	let ref=firebase.database().ref(connect);
-    ref.on("value",function(snapshot){
-    	let main=document.getElementById("main");
-  		let screen=document.getElementById("screen");
-  		main.removeChild(screen);
-  		let create=document.createElement("div");
-  		create.setAttribute("id","screen");
-  		document.getElementById("main").appendChild(create);
-    		let nums=Object.keys(snapshot.val());
-    		if(nums.length>=50){
-    			ref.remove();
-    			ref.push({
-  		           ข้อความ:"ระบบ  : "+"ล้างข้อความ"
-  	            });
-    		}else{
-    			console.log(nums.length);
-    			console.log("ไม่เกิน"+nums.length);
-    		}
-    	snapshot.forEach(function(ss){
-    		
-    		ss.forEach(function(ee){
-    			let num=ee.val();
-    			num=num.search("L458");
-    			console.log(num);
-    			if(num>=1){
-    				
-    					let img=document.createElement("img");
-    					let te=ee.val().split('L458');
-    					img.setAttribute("src",te[1]);
-    					document.getElementById("screen").appendChild(img);
-    				    let t=document.getElementById("screen");
-    				$("#screen").append("<br>");
-    				
-    			}else{
-    			let nums=ee.val();
-    			console.log("ครูหนึ่ง"+nums.search("ครู"));
-  	            if(nums.search("ครูหนึ่ง")>=0){
-  	            	$("#screen").append("<img src='https://sites.google.com/a/thk.ac.th/kruekk/_/rsrc/1545383981793/favicon.ico' class='logo'><p class='kru'>"+ee.val()+"</p>");
-  	            	console.log("ครู");
-  	            }else{
-  	            
-  	            let element=document.createElement("p");
-  	            let textnode=document.createTextNode(ee.val());
-  	            element.appendChild(textnode);
-  	            document.getElementById("screen").appendChild(element);
-  	            }
-  	            
-  		        }
-    		});
+function choose(test){
+    $("#testout").css("display","none");
+	$("#testin").css("display","block");
+	let ref=firebase.database().ref("test/"+test);
+	ref.once("value",function(snapshot){
+	choosetest=test;
+	Htest=Object.keys(snapshot.val());
+	testmix=Object.values(Object.values(snapshot.val()));
+	num=testmix.length;
+	Menum=0;
+	tttt=0;
+	loadtest(Menum);
+},function(err){
+	
+});
+}
 
-      
-    	});
-  	  let t=document.getElementById("screen");
-  		        t.scrollTo(0,8000);
+function loadtest(number){
+	if(number<num){
+		let savetext=Object.values(testmix[number]);
+		console.log("ข้อที่ "+(Menum+1)+" ดึงข้อมูล "+savetext[0]);
+		let arr=savetext[0].split("|");
+		truetest=arr[0];
+		$("#headerans").text(Htest[number]);
+		$("#ans1").text(arr[1]);
+		$("#ans2").text(arr[2]);
+		$("#ans3").text(arr[3]);
+		$("#ans4").text(arr[4]);
+	}else{
+		console.log("ครบแล้ว");
+		let ref=firebase.database().ref("scoretest/"+choosetest+"/"+numberstudent);
+		ref.set({
+			"ข้อมูล":tttt
+		});
+		$("#testin").css("display","none");
+		$("#scoreend").text(tttt);
+	    $("#testend").css("display","block");
+	}
+	
+}
+
+function checkboxs(){
+	let b1=document.getElementById("b1");
+	let b2=document.getElementById("b2");
+	let b3=document.getElementById("b3");
+	let b4=document.getElementById("b4");
+if(b1.checked==true){
+	userchoose=$("#ans1").text();
+b4.checked=false;
+b2.checked=false;
+b3.checked=false;
+ }else if(b2.checked==true){
+ 	userchoose=$("#ans2").text();
+b1.checked=false;
+b3.checked=false;
+b4.checked=false;
+ }else if(b3.checked==true){
+ 	userchoose=$("#ans3").text();
+b1.checked=false;
+b2.checked=false;
+b4.checked=false;
+ }else if(b4.checked==true){
+ 	userchoose=$("#ans4").text();
+b1.checked=false;
+b2.checked=false;
+b3.checked=false;
+ }else{
+
+ }
+}
+
+function checktest(){
+	if(!userchoose==""){
+		if(truetest==userchoose){
+		tttt=1+tttt;
+		console.log(tttt);
+		console.log("ถูก");
+	}else{
+		console.log("ผิด");
+	}
+	b1.checked=false;
+b2.checked=false;
+b3.checked=false;
+b4.checked=false;
+loadtest(Menum=Menum+1);
+userchoose="";
+	}
+	
+
+}
+
+function ment(post){
+let ref=firebase.database().ref("postment/"+post);
+ref.once("value",function(snapshot){
+	$("#ment>.content>center>div").remove();
+    		$("#ment>.content>center>p").remove();
+    		$("#ment>.content>center>a").remove();
+	$("#main").css("display","none");
+	$("#ment").css("display","block");
+	$("#header").text(post);
+    	if(snapshot.val()==null){
+    		console.log("ไม่พบข้อการตอบกลับ");
+    		$("#ment>.content>center").prepend("<p>ไม่พบข้อการตอบกลับ</p>");
+    	}else{
+            snapshot.forEach(function(ee){
+		    ee.forEach(function(tt){
+            		let text=tt.val();
+            		text=text.split("%058");
+            		$("#ment>.content>center").prepend("<div><p>"+text[1]+"</p><br><a>"+text[0]+"</a></div>");
+            	});
+	        });
+    	}
     },function(err){
 
     });
-    let t=document.getElementById("screen");
-  	t.scrollTo(0,4000);
+}
 
+     	function logins(){
+  	let ref=firebase.database().ref("user/"+$("#username").val()+"/password");
+    ref.once("value",function(snapshot){
+    	if(snapshot.val()==$("#password").val()){
+    		$("#login").css("display","none");
+    		$("#main").css("display","block");
+    		let ref=firebase.database().ref("user/"+$("#username").val()+"/username");
+    		ref.once("value",function(snapshot){
+    	nameuser=snapshot.val();
+    	console.log("ยินดีต้อนรับ "+nameuser);
+    	let ref=firebase.database().ref("user/"+nameuser+"/numberstudent");
+    		ref.once("value",function(snapshot){
+    	numberstudent=snapshot.val();
+    	console.log("เลขนักเรียน "+numberstudent);
+    },function(err){
+
+    });
+    },function(err){
+
+    });
+    	}else{
+            console.log("รหัสผ่านหรือผู้ใช้ผิด");
+    	}
+    },function(err){
+
+    });
+
+  }
+function deletes(element){
+	let ref=firebase.database().ref("delete");
+	ref.push().set(element);
+	alert("แจ้งลบกระทู้เรียบร้อยแล้ว");
+}
+  function send(){
+  	if(!$("#menttext").val()==""){
+  		let ref=firebase.database().ref("postment/"+$("#header").text());
+  		ref.push({
+  			ข้อความ:name+"  เวลา "+Date()+"%058"+$("#menttext").val()
+  		});
+  		$("#menttext").val("");
+    	ref.once("value",function(snapshot){
+    		$("#ment>.content>center>div").remove();
+    		$("#ment>.content>center>p").remove();
+    		$("#ment>.content>center>a").remove();
+            snapshot.forEach(function(ee){
+            	ee.forEach(function(tt){
+            		 let text=tt.val();
+            		 text=text.split("%058");
+            		 $("#ment>.content>center").prepend("<div><p>"+text[1]+"</p><br><a>"+text[0]+"</a></div>");
+            	});
+		    
+		    });
+        },function(err){
+
+        });
+
+  	}
+  }
+
+  function post(){
+  	if(!$("#content").val()==""){
+  		let ref=firebase.database().ref("post");
+  	    ref.child($("#content").val()).set(name);
+ref.once("value",function(snapshot){
+	$(".contentshow>center>div").remove();
+	$(".contentshow>center>a").remove();
+	$(".contentshow>center>br").remove();
+	snapshot.forEach(function(ee){
+		console.log(ee.val());
+		$(".contentshow>center").prepend("<div onclick='ment(\""+ee.key+"\")' class='hp'>กระทู้หัวข้อ "+ee.key+"</div><a onclick='deletes(\""+ee.key+"\")'>แจ้งลบกระทู้นี้</a><br><br>");
+	});
+},function(err){
+	
+});
   	}
   	
   }
-
-
-  function sendimg(){
-  	
-  	
-  	let content=document.getElementById("result").value;
-  	let ref=firebase.database().ref(connect);
-  	ref.push({
-  		ข้อความ:"ชื่อผู้ใช้ "+connect+" : "+"L458"+content
-  	});
-  	document.getElementById("result").value="";
-  	
-  }
-
-
-
-  function send(){
-
-  	let content=document.getElementById("result").value;
-  	let ref=firebase.database().ref(connect);
-  	ref.push({
-  		ข้อความ:"ชื่อผู้ใช้ "+connect+" : "+content
-  	});
-  	document.getElementById("result").value="";
-
-  }
-</script>
-<style type="text/css">
-   @keyframes show{
-   	 0%{transform:scale(1,1);}
-   	 50%{transform:scale(1.1,1.1);}
-   	 100%{transform:scale(1,1);}
-   }
-   .logo{
-   	width: 6%;
-   }
-   .kru{
-   	margin-left:15px; 
-		color:#fff;
-		postion:relative;
-		font-family: 'Mitr', sans-serif;
-		width: 30%;
-		background-color: #581845;
-		padding: 10px 25px;
-		border-radius:0px 10px 10px 10px;
-   }
-   .sticker{
-   	width: 60%;
-   	padding: 10px;
-   	display: none;
-   	position: absolute;
-   	background-color: #36132C;
-   	border:3px solid #36132C;
-   	border-radius: 15px 15px 15px 15px;
-   }
-   .sticker>button{
-   	position: absolute;
-   	font-size: 20px;
-   	    font-family: 'Mitr', sans-serif;
-		background-color: #36132C;
-		padding: 10px;
-		color:#fff;
-		outline:none;
-		transition:all 0.5s ease;
-   }
-   .sticker>button:hover{
-   	position: absolute;
-   	font-size: 20px;
-   	    font-family: 'Mitr', sans-serif;
-		background-color: #36132C;
-		padding: 10px;
-		color:#fff;
-		outline:none;
-		transition:all 0.5s ease;
-   }
-   .sticker>img{
-   	border-radius: 15px;
-   	background-color: #fff;
-   	border:3px solid #43b9ea;
-   	margin:5px;
-   	width: 20%;
-   }
-   .sticker>img:hover{
-   	opacity: 0.5;
-   }
-   #input{
-   	animation-name: show;
-   	animation-duration: 5s;
-   	animation-iteration-count: infinite;
-   }
-   img{
-   	
-   }
-   #con{
-		display: none;
-		position: relative;
-		width: 90%;
-		bottom: 0;
-		background-color: #fff;
-		padding: 5px;
-	}
-	#main{
-		display: none;
-
-	}
-    ::-webkit-scrollbar{
-		width: 10px;
-	}
-	::-webkit-scrollbar-track{
-		background-color: #fff;
-		
-	}
-	::-webkit-scrollbar-thumb{
-		background-color: #fff;
-	}
-	#screen{
-		overflow:scroll;
-		
-		height: 360px;
-	}
-	img{
-		width: 30%;
-	}
-	a{
-		color:#581845;
-		font-family: 'Mitr', sans-serif;
-		text-decoration: none;
-		font-size: 15px;
-	}
-	p{
-		margin-left:15px; 
-		color:#581845;
-		postion:relative;
-		font-family: 'Mitr', sans-serif;
-		width: 60%;
-		/*background-image:linear-gradient(#BE9FD8,#6dd0f7);*/
-		padding: 10px 25px;
-		border-radius:10px 10px 10px 0px;
-
-	}
-	p:hover{
-		opacity: 0.5;
-	}
-	button{
-		font-family: 'Mitr', sans-serif;
-		background-color: #581845;
-		padding: 10px 25px;
-		border:3px solid #36132C;
-		color:#fff;
-		border-radius: 15px;
-		outline:none;
-		transition:all 0.5s ease;
-		box-shadow: 0px 5px 0px #36132C;
-	}
-	button:hover{
-		background-color: #fff;
-		border:3px solid #36132C;
-		color:#581845;
-	}
-	input{
-		outline:none;
-		box-shadow: 0px 5px 0px #36132C;
-		font-family: 'Mitr', sans-serif;
-		background-color: #fff;
-		padding: 10px 25px;
-		border:3px solid #36132C;
-		border-radius: 15px;
-	}
-	.t {
-		opacity: 0.5;
-	}
-	.t :active{
-		opacity: 0.2;
-	}
-	#result{
-		height: 20px;
-		line-height: 20px;
-		outline:none;
-		box-shadow: 0px 1px 0px #581845;
-		font-family: 'Mitr', sans-serif;
-		background-color: #581845;
-		padding: 10px;
-		color: #fff;
-		border:0px solid #581845;
-		border-radius: 15px;
-	}
-	#result:hover{
-		outline:none;
-		font-family: 'Mitr', sans-serif;
-		background-color: #581845;
-		color: #fff;
-		border:0px solid #581845;
-		border-radius: 15px;
-	}
-	#box{
-		height: 30px;
-		line-height: 30px;
-		outline:none;
-		box-shadow: 0px 5px 0px #581845;
-		font-family: 'Mitr', sans-serif;
-		background-color: #581845;
-		padding: 10px;
-		color: #fff;
-		border:0px solid #581845;
-		border-radius: 15px;
-	}
-	#box:hover{
-		outline:none;
-		box-shadow: 0px 5px 0px #581845;
-		font-family: 'Mitr', sans-serif;
-		background-color: #581845;
-		color: #fff;
-		border:0px solid #581845;
-		border-radius: 15px;
-	}
-	#box>i{
-		margin: 3px;
-	}
-</style>
-
-
+     </script>
+      <style type="text/css">
+      body{
+      	margin: 0;
+      	padding: 0;
+      	font-family: 'Mitr', sans-serif;
+      }
+      #login{
+      	display: block;
+      }
+      #main{
+      	display: none;
+      }
+      #ment{
+      	display: none;
+      }
+      #test{
+      	display: none;
+      }
+      #testin{
+      	display: none;
+      }
+      #testend{
+      	display: none;
+      }
+      #profile{
+      	display: none;
+      }
+      td>a{
+      	color:#fff;
+      }
+      .hp{
+      	background-color: #ddd;
+      	color:#885FCD;
+      	margin:2px;
+      }
+      	a{
+      		font-size: 12px;
+      		color:#885FCD;
+      		text-decoration: none;
+      	}
+      	input[type='text']{
+      		width: 40%;
+      		padding: 10px 20px;
+      		margin:10px;
+      		border-radius: 15px;
+      		border:2px solid #ddd;
+      		outline:none;
+      		font-family: 'Mitr', sans-serif;
+      	}
+      	input[type='password']{
+      		width: 40%;
+      		padding: 10px 20px;
+      		margin:10px;
+      		border-radius: 15px;
+      		border:2px solid #ddd;
+      		outline:none;
+      		font-family: 'Mitr', sans-serif;
+      	}
+      	button{
+      		width: 40%;
+      		padding: 10px 20px;
+      		margin:10px;
+      		border-radius: 15px;
+      		border:2px solid #ddd;
+      		outline:none;
+      		font-family: 'Mitr', sans-serif;
+      		transition:1s all ease;
+      	}
+      	button:hover{
+      		transform:scale(1.1,1.1);
+      	}
+      	img{
+      		opacity: 1;
+      		transition:all 0.5s ease;
+      		}img:hover{
+      			opacity: 0.5;
+      		}
+      		hr{
+      			border:1px solid #3498db;
+      			width: 50%;
+      		}
+      		.nav{
+      			padding: 10px 25px;
+      			background-color: #885FCD;
+      		}
+      		.nav>a{
+      			margin: 10px;
+      			color: #fff;
+      		}
+      		#main>#contentshow{
+      			width: 90%;
+      			height: 300px;
+      			overflow: scroll;
+      		}
+      		#ment>.content{
+      			width: 100%;
+      			height: 400px;
+      			overflow: scroll;
+      		}
+      		::-webkit-scrollbar{
+      			width: 0px;
+      		}
+      		center>div{
+      			color:#fff;
+      			border-radius: 15px;
+      			border:3px solid #8e44ad;
+      			box-shadow: 0px 5px 0px 0px #8e44ad;
+      			width: 80%;
+      			background-color: #3498db;
+      			padding: 10px 25px;
+      			margin-top: 10px;
+      		}
+      		center>div>a{
+      			color:#ddd;
+      		}
+      		.footer{
+      			width: 100%;
+      			background-color: #fff;
+      			position: absolute;
+      			bottom: -10;
+      		}select{
+          color:#885FCD;
+          width: 50%;
+          padding: 10px 20px;
+          margin:10px;
+          border-radius: 15px;
+          border:2px solid #ddd;
+          outline:none;
+          font-family: 'Mitr', sans-serif;
+        }
+      	
+      	input[type='password']{
+          color:#885FCD;
+      		width: 40%;
+      		padding: 10px 20px;
+      		margin:10px;
+      		border-radius: 15px;
+      		border:2px solid #ddd;
+      		outline:none;
+      		font-family: 'Mitr', sans-serif;
+      	}
+        input[type='number']{
+          color:#885FCD;
+          width: 40%;
+          padding: 10px 20px;
+          margin:10px;
+          border-radius: 15px;
+          border:2px solid #ddd;
+          outline:none;
+          font-family: 'Mitr', sans-serif;
+        }
+      </style>
 </head>
-
 <body>
+<div id="login">
+	<div style="height: 70px;">
+	</div>
 	<center>
-						<div class="sticker" >
-					<img src="http://khengoolestan.com/wp-content/uploads/2017/11/dance_bandari_9_azar_1396.gif" class="t-1" >
-					<img src="https://sv1.picz.in.th/images/2019/01/20/9MtJVe.gif" class="t-2" >
-					<button onclick="$('.sticker').css('display','none')"><i class="material-icons">cancel</i></button>
-		
-	        </div><br>
-</center>
-	<div id="input">
-		<center>
-			<div style="display: block;height: 80px;">
-				
-			</div>
-			<img src="https://sites.google.com/a/thk.ac.th/kruekk/_/rsrc/1545383981793/favicon.ico"><br>
-	    <input type="" name="" id="text" placeholder="กรุณากรอกชื่อ">
-        <button onclick="connect()">เชื่อมต่อ</button>
-        <br><br>
-        <a href="#">สมัครสมาชิก</a>
-        <br>
-    </center>
+		<a>เข้าสู่ระบบ เพื่อเข้าใช้งาน</a><br>
+	<input type="text" name="" placeholder="ชื่อผู้ใช้" id="username"><br>
+	<input type="password" name="" placeholder="รหัสผ่าน" id="password"><br>
+
+<img src="https://sv1.picz.in.th/images/2019/02/09/TEuuKP.png" width="200px" height="60px" onclick="logins()">
+<br>
+	<a href="register.html">สมัครสมาชิก</a>
+	</center>
+</div>
+
+
+<div id="main">
+	<div class="nav">
+		<a class="m0">ข้อมูลส่วนตัว</a><a class="m1">กระทู้</a><a class="m2">ทำข้อสอบ</a><a href="">ออกจากระบบ</a>
 	</div>
-	
-	<div id="main">
-		<div id="screen" >
+	<input type="text" name="" id="content"><button onclick="post()">ตั้งกระทู้</button>
+	<center><h3>รายชื่อกระทู้</h3></center>
+	<div class="contentshow">
+		<center>
 			
-		</div>
+		</center>
+		
 	</div>
-	<div id="con" >
+</div>
+
+<div id="ment">
+	&nbsp;&nbsp;<a class="back">กลับหน้าหลัก</a>
+	<center>
+		<p>กระทู้ที่เลือก<p><p id="header"></p>
+	</center>
+	<hr>
+	<div class="content">
 		<center>
-			<table>
-				<tr>
-					<td>
-						
-					</td>
-				</tr>
-				<tr>
-					<td>
-			<center>
-	<div id="box">
-	<input type="" name="" id="result" style="width: 60%;" placeholder="ข้อความ..." >
-	<i class="material-icons" onclick="send()">send</i>&nbsp;<i class="material-icons" onclick="$('.sticker').css('display','block');">insert_emoticon</i>
-	
-    <br>
-    <br>
-     
-     </div>
-     </center>
-     </td>
-				</tr>
-			</table>
-			</center>
-     <script type="text/javascript">
-     	var input=document.getElementById("result");
+		</center>
+	</div>
+	<div class="footer">
+		<center>
+		<input type="text" name="" id="menttext" width="70%"><button onclick="send()" width="20%">แสดงความคิดเห็น</button>
+	</center>
+	</div>
+<script type="text/javascript">
+	var input=document.getElementById("menttext");
  input.addEventListener("keyup", function(event) {
   event.preventDefault();
   if (event.keyCode === 13) {
     send();
   }
 });
+</script>
+	
+	
+</div>
 
-$(function(){
-
-$('.t-1').click(function(){
-    	let ref=firebase.database().ref(connect);
-  	    ref.push({
-  		ข้อความ:"ชื่อผู้ใช้ "+connect+" : L458http://khengoolestan.com/wp-content/uploads/2017/11/dance_bandari_9_azar_1396.gif"
-  	   });
-    });
-$('.t-2').click(function(){
-    	let ref=firebase.database().ref(connect);
-  	    ref.push({
-  		ข้อความ:"ชื่อผู้ใช้ "+connect+" : L458https://sv1.picz.in.th/images/2019/01/20/9MtJVe.gif"
-  	   });
-    });
-
-});
- 
-     </script>
-     
+<div id="test">
+	&nbsp;&nbsp;<a class="back">กลับหน้าหลัก</a>
+	<center>
+		<br>
+	<H1>เลือกข้อสอบ</H1><br>
+		<div id="testout"></div>
+		<div id="testin">
+	<br>
+	<h3 id="headerans">s</h3>
+	<table>
+		<tr>
+			<td>
+	<input type="checkbox" name="" value="1" id="b1" onclick="checkboxs()"><a id="ans1"></a>
+	<br>
+	<input type="checkbox" name="" value="2" id="b2" onclick="checkboxs()"><a id="ans2"></a>
+	<br>
+	<input type="checkbox" name="" value="3" id="b3" onclick="checkboxs()"><a id="ans3"></a>
+	<br>
+	<input type="checkbox" name="" value="4" id="b4" onclick="checkboxs()"><a id="ans4"></a>
+	<br>
+			</td>
+		</tr>
+	</table>
+	
+	<script type="text/javascript">
+		
+	</script>
+	<button onclick="checktest()" id="next" >ต่อไป</button>
+</div>
+<div id="testend">
+	<br>
+	<H1>คะแนน</H1><br>
+	<h3 id="scoreend"></h3>
+	
+	<br>
+</div>
+</center>
+</div>
+<div id="profile">
+	&nbsp;&nbsp;<a class="back">กลับหน้าหลัก</a>
+	<center>
+		<h3>ข้อมูลส่วนตัว</h3><br>
+		<a style="color:red;">**ไม่สามารถแก้ไขusernameได้**</a><br>
+		<input type="text" name="" placeholder="ชื่อผู้ใช้" id="usernameprofile" disabled="false"><br>
+	<input type="password" name="" placeholder="รหัสผ่าน" id="passwordprofile"><br>
+  <input type="text" name="" placeholder="ชื่อ" id="name"><br>
+  <input type="text" name="" placeholder="นามสกุล" id="lastname"><br>
+  <input type="number" name="" placeholder="เลขที่" id="number"><br>
+  <input type="number" name="" placeholder="เลขนักเรียน" id="numberstudent"><br>
+  <select id="year">
+    <option value="1">มัธยมศึกษาปีที่ 1</option>
+    <option value="2">มัธยมศึกษาปีที่ 2</option>
+    <option value="3">มัธยมศึกษาปีที่ 3</option>
+    <option value="4">มัธยมศึกษาปีที่ 4</option>
+    <option value="5">มัธยมศึกษาปีที่ 5</option>
+    <option value="6">มัธยมศึกษาปีที่ 6</option>
+  </select><br>
+  <select id="room">
+    <option value="1">ห้อง 1</option>
+    <option value="2">ห้อง 2</option>
+    <option value="3">ห้อง 3</option>
+    <option value="4">ห้อง 4</option>
+    <option value="5">ห้อง 5</option>
+    <option value="6">ห้อง 6</option>
+    <option value="7">ห้อง 7</option>
+    <option value="8">ห้อง 8</option>
+    <option value="9">ห้อง 9</option>
+    <option value="10">ห้อง 10</option>
+    <option value="11">ห้อง 11</option>
+    <option value="12">ห้อง 12</option>
+    <option value="13">ห้อง 13</option>
+    <option value="14">ห้อง 14</option>
+    <option value="15">ห้อง 15</option>
+    <option value="16">ห้อง 16</option>
+    <option value="17">ห้อง 17</option>
+    <option value="18">ห้อง 18</option>
+    <option value="19">ห้อง 19</option>
+    <option value="20">ห้อง 20</option>
+  </select><br>
+  <button onclick="save()">บันทึก</button>
+	</center>
+</div>
 </body>
 </html>
