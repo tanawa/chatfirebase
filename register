@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link href="https://fonts.googleapis.com/css?family=Mitr" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet">
+     <script src="https://www.gstatic.com/firebasejs/5.7.3/firebase.js"></script>
+     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+     <script type="text/javascript">
+     	$(function(){
+     		var config = {
+    apiKey: "AIzaSyC4dogP1e8BtQWf4YAilx-3HLTzRbB1lhQ",
+    authDomain: "chat-3a9ca.firebaseapp.com",
+    databaseURL: "https://chat-3a9ca.firebaseio.com",
+    projectId: "chat-3a9ca",
+    storageBucket: "chat-3a9ca.appspot.com",
+    messagingSenderId: "707420213129"
+  };
+  firebase.initializeApp(config);
+
+  
+     	});
+
+     	function regis(){
+
+        if($("#username").val()=="" || $("#password").val()=="" || $("#year").val()=="" || $("#room").val()=="" || $("#name").val()=="" || $("#lastname").val()=="" || $("#number").val()=="" || $("#numberstudent").val()=="" ){
+          console.log("กรอกข้อมูลไม่ครบ");
+        }else{
+          let ref=firebase.database().ref($("#username").val()+"/username");
+    ref.once("value",function(snapshot){
+      if(snapshot.val()==null){
+        let ref=firebase.database().ref("user/"+$("#username").val());
+        ref.set({
+      "username":$("#username").val(),
+      "password":$("#password").val(),
+      "year":$("#year").val(),
+      "room":$("#room").val(),
+      "name":$("#name").val(),
+      "lastname":$("#lastname").val(),
+      "number":$("#number").val(),
+      "numberstudent":$("#numberstudent").val()
+        });
+      }
+      window.location.href="https://tanawa.github.io/chatfirebase/";
+    },function(err){
+
+    });
+        }
+  	
+    
+  }
+     </script>
+      <style type="text/css">
+      body{
+      	font-family: 'Mitr', sans-serif;
+      }
+      a{
+      	font-size: 12px;
+      }
+      	.login{
+      		font-family: 'Mitr', sans-serif;
+      		width: 40%;
+      		height: 60px;
+      		padding: 10px 25px;
+      		border:1px solid #047;
+      		background-color: #047;
+      		color:#fff;
+      		opacity: 1;
+      		outline:none;
+      		transition:all 0.5s ease;
+      		border-radius: 15px;
+      	}
+      	.login:hover{
+      		opacity: 0.5;
+      	}
+      	.login>i{
+      		position: relative;
+      	}
+      	.login>a{
+      		position: relative;
+      	}
+      	a{
+      		text-decoration: none;
+      	}
+        select{
+          color:#885FCD;
+          width: 50%;
+          padding: 10px 20px;
+          margin:10px;
+          border-radius: 15px;
+          border:2px solid #ddd;
+          outline:none;
+          font-family: 'Mitr', sans-serif;
+        }
+      	input[type='text']{
+          color:#885FCD;
+      		width: 40%;
+      		padding: 10px 20px;
+      		margin:10px;
+      		border-radius: 15px;
+      		border:2px solid #ddd;
+      		outline:none;
+      		font-family: 'Mitr', sans-serif;
+      	}
+      	input[type='password']{
+          color:#885FCD;
+      		width: 40%;
+      		padding: 10px 20px;
+      		margin:10px;
+      		border-radius: 15px;
+      		border:2px solid #ddd;
+      		outline:none;
+      		font-family: 'Mitr', sans-serif;
+      	}
+        input[type='number']{
+          color:#885FCD;
+          width: 40%;
+          padding: 10px 20px;
+          margin:10px;
+          border-radius: 15px;
+          border:2px solid #ddd;
+          outline:none;
+          font-family: 'Mitr', sans-serif;
+        }
+      </style>
+</head>
+<body>
+<div>
+	
+	<center>
+	<input type="text" name="" placeholder="ชื่อผู้ใช้" id="username"><br>
+	<input type="password" name="" placeholder="รหัสผ่าน" id="password"><br>
+  <input type="text" name="" placeholder="ชื่อ" id="name"><br>
+  <input type="text" name="" placeholder="นามสกุล" id="lastname"><br>
+  <input type="number" name="" placeholder="เลขที่" id="number"><br>
+  <input type="number" name="" placeholder="เลขนักเรียน" id="numberstudent"><br>
+  <select id="year">
+    <option value="1">มัธยมศึกษาปีที่ 1</option>
+    <option value="2">มัธยมศึกษาปีที่ 2</option>
+    <option value="3">มัธยมศึกษาปีที่ 3</option>
+    <option value="4">มัธยมศึกษาปีที่ 4</option>
+    <option value="5">มัธยมศึกษาปีที่ 5</option>
+    <option value="6">มัธยมศึกษาปีที่ 6</option>
+  </select><br>
+  <select id="room">
+    <option value="1">ห้อง 1</option>
+    <option value="2">ห้อง 2</option>
+    <option value="3">ห้อง 3</option>
+    <option value="4">ห้อง 4</option>
+    <option value="5">ห้อง 5</option>
+    <option value="6">ห้อง 6</option>
+    <option value="7">ห้อง 7</option>
+    <option value="8">ห้อง 8</option>
+    <option value="9">ห้อง 9</option>
+    <option value="10">ห้อง 10</option>
+    <option value="11">ห้อง 11</option>
+    <option value="12">ห้อง 12</option>
+    <option value="13">ห้อง 13</option>
+    <option value="14">ห้อง 14</option>
+    <option value="15">ห้อง 15</option>
+    <option value="16">ห้อง 16</option>
+    <option value="17">ห้อง 17</option>
+    <option value="18">ห้อง 18</option>
+    <option value="19">ห้อง 19</option>
+    <option value="20">ห้อง 20</option>
+  </select><br>
+	<img src="https://sv1.picz.in.th/images/2019/02/09/TE6zZb.png" width="200px" height="60px" onclick="regis()"><br>
+	</center>
+</div>
+
+</body>
+</html>
