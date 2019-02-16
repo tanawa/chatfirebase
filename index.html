@@ -3,13 +3,15 @@
 <head>
 	<title></title>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<script src='https://code.responsivevoice.org/responsivevoice.js'></script>
 	<link href="https://fonts.googleapis.com/css?family=Mitr" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
       rel="stylesheet">
      <script src="https://www.gstatic.com/firebasejs/5.7.3/firebase.js"></script>
      <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
      <script type="text/javascript">
-
+	
+        
      	var nameuser="",userchoose="";
      	$(function(){
      		var numberstudent;
@@ -147,6 +149,7 @@ function choose(test){
 
 function loadtest(number){
 	if(number<num){
+		responsiveVoice.speak(Htest[number],"Thai Female");
 		let savetext=Object.values(testmix[number]);
 		console.log("ข้อที่ "+(Menum+1)+" ดึงข้อมูล "+savetext[0]);
 		let arr=savetext[0].split("|");
@@ -158,6 +161,7 @@ function loadtest(number){
 		$("#ans4").text(arr[4]);
 	}else{
 		console.log("ครบแล้ว");
+		responsiveVoice.speak("คุณได้"+tttt+"คะแนน","Thai Female");
 		let ref=firebase.database().ref("scoretest/"+choosetest+"/"+numberstudent);
 		ref.set({
 			"ข้อมูล":tttt
@@ -587,11 +591,11 @@ ref.once("value",function(snapshot){
 <br>
 <div id="testend">
 	<br>
-	<H1>คะแนน</H1><br>
-	<h3 id="scoreend"></h3>
-	
-	<br>
-</div>
+	<H3>คุณได้</H3><br>
+	<H1 id="scoreend"></H1>
+	<H3>คะแนน</H3><br>
+
+</div><br><br>
 </center>
 </div>
 <div id="profile">
