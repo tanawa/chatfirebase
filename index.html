@@ -288,8 +288,11 @@ function deletes(element){
   function send(){
   	if(!$("#menttext").val()==""){
   		let ref=firebase.database().ref("postment/"+$("#header").text());
+  		let names;
+  		ref=firebase.database().ref("user/"+nameuser+"/name");
+    ref.once("value",function(snapshot){names=snapshot.val();},function(err){});
   		ref.push({
-  			ข้อความ:name+"  เวลา "+Date()+"%058"+$("#menttext").val()
+  			ข้อความ:names+"  เวลา "+Date()+"%058"+$("#menttext").val()
   		});
   		$("#menttext").val("");
     	ref.once("value",function(snapshot){
