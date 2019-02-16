@@ -9,6 +9,7 @@
      <script src="https://www.gstatic.com/firebasejs/5.7.3/firebase.js"></script>
      <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
      <script type="text/javascript">
+
      	var nameuser="",userchoose="";
      	$(function(){
      		var numberstudent;
@@ -108,9 +109,10 @@ function save(){
           console.log("กรอกข้อมูลไม่ครบ");
         }else{
 
-        let ref=firebase.database().ref("user/"+name);
+        let ref=firebase.database().ref("user/"+nameuser);
+
      ref.update({
-      "username":name,
+      "username":$("#usernameprofile").val(),
       "password":$("#passwordprofile").val(),
       "year":$("#year").val(),
       "room":$("#room").val(),
@@ -160,6 +162,13 @@ function loadtest(number){
 		ref.set({
 			"ข้อมูล":tttt
 		});
+		ref=firebase.database().ref("user/"+nameuser);
+ref.once("value",function(snapshot){
+	$.post( "https://docs.google.com/forms/d/e/1FAIpQLScjgMGine5fpem-CrpTLzvL5TjkA2KyFkgv5IoobJ_jOIIOVQ/formResponse?usp=pp_url&entry.1002013231="+choosetest+"&entry.300587130="+snapshot.val().name+" "+snapshot.val().lastname+"&entry.698397889="+snapshot.val().year+"/"+snapshot.val().room+"&entry.156420302="+tttt+"&entry.1691006596="+numberstudent );
+},function(err){
+	
+});
+		
 		$("#testin").css("display","none");
 		$("#scoreend").text(tttt);
 	    $("#testend").css("display","block");
@@ -353,12 +362,12 @@ ref.once("value",function(snapshot){
       }
       .hp{
       	background-color: #ddd;
-      	color:#885FCD;
+      	color:#465059;
       	margin:2px;
       }
       	a{
       		font-size: 12px;
-      		color:#885FCD;
+      		color:#465059;
       		text-decoration: none;
       	}
       	input[type='text']{
@@ -399,12 +408,12 @@ ref.once("value",function(snapshot){
       			opacity: 0.5;
       		}
       		hr{
-      			border:1px solid #3498db;
+      			border:1px solid #465059;
       			width: 50%;
       		}
       		.nav{
       			padding: 10px 25px;
-      			background-color: #885FCD;
+      			background-color: #465059;
       		}
       		.nav>a{
       			margin: 10px;
@@ -426,10 +435,10 @@ ref.once("value",function(snapshot){
       		center>div{
       			color:#fff;
       			border-radius: 15px;
-      			border:3px solid #8e44ad;
-      			box-shadow: 0px 5px 0px 0px #8e44ad;
+      			border:3px solid #3c474d;
+      			box-shadow: 0px 5px 0px 0px #272f34;
       			width: 80%;
-      			background-color: #3498db;
+      			background-color: #465059;
       			padding: 10px 25px;
       			margin-top: 10px;
       		}
@@ -476,14 +485,16 @@ ref.once("value",function(snapshot){
 </head>
 <body>
 <div id="login">
-	<div style="height: 70px;">
+	<div style="height: 40px;">
 	</div>
 	<center>
+		<img src="https://image.flaticon.com/icons/svg/253/253983.svg" width="30%">
+		<br>
 		<a>เข้าสู่ระบบ เพื่อเข้าใช้งาน</a><br>
 	<input type="text" name="" placeholder="ชื่อผู้ใช้" id="username"><br>
 	<input type="password" name="" placeholder="รหัสผ่าน" id="password"><br>
 
-<img src="https://sv1.picz.in.th/images/2019/02/09/TEuuKP.png" width="200px" height="60px" onclick="logins()">
+<img src="https://sv1.picz.in.th/images/2019/02/09/TEuuKP.png" width="200px" height="60px" onclick="logins()" style="border-radius: 15px;box-shadow: 0px 5px 0px 0px #484f8d;">
 <br>
 	<a href="https://tanawa.github.io/chatfirebase/register">สมัครสมาชิก</a>
 	</center>
@@ -500,7 +511,7 @@ ref.once("value",function(snapshot){
 		<center>
 			
 		</center>
-		
+		<img src="https://image.flaticon.com/icons/svg/1141/1141771.svg" width="20%" style="position: absolute;bottom: 0;">
 	</div>
 </div>
 
@@ -536,11 +547,12 @@ ref.once("value",function(snapshot){
 	&nbsp;&nbsp;<a class="back">กลับหน้าหลัก</a>
 	<center>
 		<br>
+		<img src="https://image.flaticon.com/icons/svg/1039/1039328.svg" width="10%"><br>
 	<H1>เลือกข้อสอบ</H1><br>
 		<div id="testout"></div>
 		<div id="testin">
-	<br>
-	<h3 id="headerans">s</h3>
+	
+	<h5 id="headerans">s</h5>
 	<table>
 		<tr>
 			<td>
@@ -561,6 +573,7 @@ ref.once("value",function(snapshot){
 	</script>
 	<button onclick="checktest()" id="next" >ต่อไป</button>
 </div>
+<br>
 <div id="testend">
 	<br>
 	<H1>คะแนน</H1><br>
@@ -573,6 +586,7 @@ ref.once("value",function(snapshot){
 <div id="profile">
 	&nbsp;&nbsp;<a class="back">กลับหน้าหลัก</a>
 	<center>
+		<img src="https://image.flaticon.com/icons/svg/167/167750.svg" width="40%" style="border-radius: 90px;border:5px solid #7e5c62;padding: 5px;"><br>
 		<h3>ข้อมูลส่วนตัว</h3><br>
 		<a style="color:red;">**ไม่สามารถแก้ไขusernameได้**</a><br>
 		<input type="text" name="" placeholder="ชื่อผู้ใช้" id="usernameprofile" disabled="false"><br>
