@@ -289,9 +289,9 @@ function deletes(element){
   	if(!$("#menttext").val()==""){
   		
   		let names;
-  		ref=firebase.database().ref("user/"+nameuser+"/name");
+  		let ref=firebase.database().ref("user/"+nameuser+"/name");
     ref.once("value",function(snapshot){names=snapshot.val();},function(err){});
-    let ref=firebase.database().ref("postment/"+$("#header").text());
+    ref=firebase.database().ref("postment/"+$("#header").text());
   		ref.push({
   			ข้อความ:names+"  เวลา "+Date()+"%058"+$("#menttext").val()
   		});
