@@ -286,20 +286,23 @@ function deletes(element){
 	alert("แจ้งลบกระทู้เรียบร้อยแล้ว");
 }
   function send(){
+  	let names;
   	if(!$("#menttext").val()==""){
   		
-  		let names;
+  		
   		let ref=firebase.database().ref("user/"+nameuser+"/name");
     ref.once("value",function(snapshot){
-    	console.log("user/"+nameuser+"/name");
+    	
     	names=snapshot.val();
-    	console.log(names);
-    },function(err){});
-    ref=firebase.database().ref("postment/"+$("#header").text());
+    	ref=firebase.database().ref("postment/"+$("#header").text());
   		ref.push({
-  			ข้อความ:names+"  เวลา "+Date()+"%058"+$("#menttext").val()
+  			ข้อความ:""+names+"  เวลา "+Date()+"%058"+$("#menttext").val()
   		});
   		$("#menttext").val("");
+
+    },function(err){});
+        ref=firebase.database().ref("postment/"+$("#header").text());
+  		
     	ref.once("value",function(snapshot){
     		$("#ment>.content>center>div").remove();
     		$("#ment>.content>center>p").remove();
