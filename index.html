@@ -290,7 +290,11 @@ function deletes(element){
   		
   		let names;
   		let ref=firebase.database().ref("user/"+nameuser+"/name");
-    ref.once("value",function(snapshot){names=snapshot.val();},function(err){});
+    ref.once("value",function(snapshot){
+    	console.log("user/"+nameuser+"/name");
+    	names=snapshot.val();
+    	console.log(names);
+    },function(err){});
     ref=firebase.database().ref("postment/"+$("#header").text());
   		ref.push({
   			ข้อความ:names+"  เวลา "+Date()+"%058"+$("#menttext").val()
