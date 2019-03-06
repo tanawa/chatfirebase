@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -67,6 +68,21 @@ $("#main").css("display","none");
     ref.once("value",function(snapshot){$("#name").val(snapshot.val());},function(err){});
     ref=firebase.database().ref("user/"+nameuser+"/lastname");
     ref.once("value",function(snapshot){$("#lastname").val(snapshot.val());},function(err){});
+
+    ref=firebase.database().ref("user/"+nameuser+"/status");
+    ref.once("value",function(snapshot){
+      if(snapshot.val()==1){
+        $("#admin").css("display","block");
+        $("#numberstudent").css("display","none");
+        $("#number").css("display","none");
+        $("#year").css("display","none");
+        $("#room").css("display","none");
+      }else{
+        $("#admin").css("display","none");
+        $("#numberstudent").css("display","block");
+        $("#number").css("display","block");
+        $("#year").css("display","block");
+        $("#room").css("display","block");
     ref=firebase.database().ref("user/"+nameuser+"/numberstudent");
     ref.once("value",function(snapshot){$("#numberstudent").val(snapshot.val());},function(err){});
     ref=firebase.database().ref("user/"+nameuser+"/number");
@@ -75,6 +91,10 @@ $("#main").css("display","none");
     ref.once("value",function(snapshot){$("#year").val(snapshot.val());},function(err){});
     ref=firebase.database().ref("user/"+nameuser+"/room");
     ref.once("value",function(snapshot){$("#room").val(snapshot.val());},function(err){});
+      }
+    },function(err){
+
+    });
 });
 
 $(".m1").click(function(){
@@ -647,7 +667,10 @@ ref.once("value",function(snapshot){
     <option value="20">ห้อง 20</option>
   </select><br>
   <button onclick="save()">บันทึก</button>
+  <br>
+  <a href="https://tanawa.github.io/chatfirebase/admin.html"><button id="admin">ผู้ดูแล</button></a>
 	</center>
+<br>
 </div>
 </body>
 </html>
