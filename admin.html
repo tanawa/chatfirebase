@@ -10,8 +10,9 @@
      <script src="https://www.gstatic.com/firebasejs/5.7.3/firebase.js"></script>
      <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
      <script src='https://tanawa.github.io/chatfirebase/excelexportjs.js'></script>
-     <link rel="stylesheet" type="text/css" href="https://tanawa.github.io/chatfirebase/style.css">
-     
+       <!--<link rel="stylesheet" type="text/css" href="https://tanawa.github.io/chatfirebase/style.css">-->
+  <link rel="stylesheet" type="text/css" href="style.css">
+
      <script type="text/javascript">
      	var config = {
     apiKey: "AIzaSyC4dogP1e8BtQWf4YAilx-3HLTzRbB1lhQ",
@@ -37,8 +38,11 @@
 
 </head>
 <body>
+<div class="nav">
+		<a class="m0">ข้อมูลส่วนตัว</a><a class="m1">กระทู้</a><a class="m2">ทำข้อสอบ</a><a href="">ออกจากระบบ</a>
+	</div>
 	<center>
-		<button id="load">โหลดลงเครื่อง</button><br><br>
+		<br><button id="load">โหลดลงเครื่อง</button><br><br>
 		<table id="export">
          <tr><th>เลขประจำตัว</th><th>ชื่อ</th><th>นามสกุล</th><th>username</th><th>ชั้น</th><th>ห้อง</th><th>เลขที่</th></tr>
         </table>
