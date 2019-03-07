@@ -8,7 +8,11 @@
       rel="stylesheet">
      <script src="https://www.gstatic.com/firebasejs/5.7.3/firebase.js"></script>
      <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+     <link rel="stylesheet" type="text/css" href="style.css">
+     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
      <script type="text/javascript">
+      var showhide=1;
      	$(function(){
      		var config = {
     apiKey: "AIzaSyC4dogP1e8BtQWf4YAilx-3HLTzRbB1lhQ",
@@ -19,14 +23,12 @@
     messagingSenderId: "707420213129"
   };
   firebase.initializeApp(config);
-
   
      	});
-
      	function regis(){
-
         if($("#username").val()=="" || $("#password").val()=="" || $("#year").val()=="" || $("#room").val()=="" || $("#name").val()=="" || $("#lastname").val()=="" || $("#number").val()=="" || $("#numberstudent").val()=="" ){
           console.log("กรอกข้อมูลไม่ครบ");
+          swal("แจ้งเตือน","กรุณากรอกข้อมูลให้ครบ","warning");
         }else{
           let ref=firebase.database().ref($("#username").val()+"/username");
     ref.once("value",function(snapshot){
@@ -43,96 +45,23 @@
       "numberstudent":$("#numberstudent").val()
         });
       }
+      swal("แจ้งเตือน","ดำเนินการสำเร็จ","success");
       window.location.href="https://tanawa.github.io/chatfirebase/";
     },function(err){
-
     });
         }
   	
     
   }
      </script>
-      <style type="text/css">
-      body{
-      	font-family: 'Mitr', sans-serif;
-      }
-      a{
-      	font-size: 12px;
-      }
-      	.login{
-      		font-family: 'Mitr', sans-serif;
-      		width: 40%;
-      		height: 60px;
-      		padding: 10px 25px;
-      		border:1px solid #047;
-      		background-color: #047;
-      		color:#fff;
-      		opacity: 1;
-      		outline:none;
-      		transition:all 0.5s ease;
-      		border-radius: 15px;
-      	}
-      	.login:hover{
-      		opacity: 0.5;
-      	}
-      	.login>i{
-      		position: relative;
-      	}
-      	.login>a{
-      		position: relative;
-      	}
-      	a{
-      		text-decoration: none;
-      	}
-        select{
-          color:#885FCD;
-          width: 50%;
-          padding: 10px 20px;
-          margin:10px;
-          border-radius: 15px;
-          border:2px solid #ddd;
-          outline:none;
-          font-family: 'Mitr', sans-serif;
-        }
-      	input[type='text']{
-          color:#885FCD;
-      		width: 40%;
-      		padding: 10px 20px;
-      		margin:10px;
-      		border-radius: 15px;
-      		border:2px solid #ddd;
-      		outline:none;
-      		font-family: 'Mitr', sans-serif;
-      	}
-      	input[type='password']{
-          color:#885FCD;
-      		width: 40%;
-      		padding: 10px 20px;
-      		margin:10px;
-      		border-radius: 15px;
-      		border:2px solid #ddd;
-      		outline:none;
-      		font-family: 'Mitr', sans-serif;
-      	}
-        input[type='number']{
-          color:#885FCD;
-          width: 40%;
-          padding: 10px 20px;
-          margin:10px;
-          border-radius: 15px;
-          border:2px solid #ddd;
-          outline:none;
-          font-family: 'Mitr', sans-serif;
-        }
-      </style>
 </head>
 <body>
 <div>
-	<br>
+
 	<center>
-    <img src="https://image.flaticon.com/icons/svg/265/265667.svg" width="40%"><br>
+    <img src="https://img.live/images/2019/03/07/Untitled-1cc5ce.jpg" width="30%"><br>
 	<input type="text" name="" placeholder="ชื่อผู้ใช้" id="username"><br>
-	<input type="password" name="" placeholder="รหัสผ่าน" id="password"><br>
+	<input type="password" name="" placeholder="รหัสผ่าน" id="password" style="width:25%;"><button id="hide" style="width: 20%;position:relative;"><div class="one"><i class="fas fa-eye"></i></div><div class="two"><i class="fas fa-eye-slash"></i></div></button><br>
   <input type="text" name="" placeholder="ชื่อ" id="name"><br>
   <input type="text" name="" placeholder="นามสกุล" id="lastname"><br>
   <input type="number" name="" placeholder="เลขที่" id="number"><br>
@@ -167,9 +96,26 @@
     <option value="19">ห้อง 19</option>
     <option value="20">ห้อง 20</option>
   </select><br>
-	<img src="https://sv1.picz.in.th/images/2019/02/09/TE6zZb.png" width="200px" height="60px" onclick="regis()" style="border-radius: 15px;box-shadow: 0px 5px 0px 0px #484f8d;"><br>
+  <button onclick="regis()" class="success"><i class="fas fa-wrench"></i> สมัครสมาชิก</button>
 	</center>
 </div>
-
+<script type="text/javascript">
+  $(".one").css("display","block");
+    $(".two").css("display","none");
+  $("#hide").click(function(){
+    if(showhide==1){
+      showhide=2;
+      $(".one").css("display","none");
+    $(".two").css("display","block");
+    $("#password").prop("type","text");
+    }else{
+      showhide=1;
+      $(".one").css("display","block");
+    $(".two").css("display","none");
+    $("#password").prop("type","password");
+    }
+    
+  });
+</script>
 </body>
 </html>
