@@ -3,6 +3,9 @@
       	padding: 0;
       	font-family: 'Mitr', sans-serif;
       }
+      a{
+        font-family: 'Mitr', sans-serif;
+      }
       #login{
       	display: block;
       }
@@ -39,39 +42,7 @@
       		text-decoration: none;
 		cursor:pointer;
       	}
-      	input[type='text']{
-      		width: 40%;
-      		padding: 10px 20px;
-      		margin:10px;
-      		border-radius: 15px;
-      		border:2px solid #ddd;
-      		outline:none;
-      		font-family: 'Mitr', sans-serif;
-      	}
-      	input[type='password']{
-      		width: 40%;
-      		padding: 10px 20px;
-      		margin:10px;
-      		border-radius: 15px;
-      		border:2px solid #ddd;
-      		outline:none;
-      		font-family: 'Mitr', sans-serif;
-      	}
-      	button{
-		cursor:pointer;
-      		width: 40%;
-      		padding: 10px 20px;
-      		margin:10px;
-      		border-radius: 15px;
-      		border:2px solid #ddd;
-      		outline:none;
-      		font-family: 'Mitr', sans-serif;
-      		transition:1s all ease;
-      	}
-      	button:hover{
-		curser:pointer;
-      		transform:scale(1.1,1.1);
-      	}
+      	
       	img{    curser:pointer;
       		opacity: 1;
       		transition:all 0.5s ease;
@@ -83,6 +54,8 @@
       			width: 50%;
       		}
       		.nav{
+            width: 100%;
+            position: fixed;
       			padding: 10px 25px;
       			background:#4286f4;
       		}
@@ -90,6 +63,14 @@
       			margin: 10px;
       			color: #fff;
       		}
+          .ment{
+            width: 75%;
+            color:#fff;
+            background-color: #5170a3;
+          }
+          .ment:hover{
+            transform: scale(1.1,1.1);
+          }
       		#main>#contentshow{
       			width: 90%;
       			height: 300px;
@@ -105,18 +86,17 @@
       		}
       		center>div{
       			color:#1f2d44;
-      			border-radius: 15px;
-      			border:3px solid #5170a3;
-      			box-shadow: 0px 5px 0px 0px #1f2d44;
+      			border-radius: 3px;
+      			border:1px solid #none;
       			width: 80%;
       			background-color: #fff;
       			padding: 10px 25px;
       			margin-top: 10px;
-			curser:pointer;
+			      curser:pointer;
       		}
       		center>div>a{
       			color:#ddd;
-			cursor:pointer;
+			      cursor:pointer;
       		}
       		.footer{
       			width: 100%;
@@ -124,6 +104,54 @@
       			position: absolute;
       			bottom: -10;
       		}select{
+            border:2px solid #ddd;
+          color:#885FCD;
+          width: 50%;
+          padding: 10px 20px;
+          margin:10px;
+          border-radius: 15px;
+          outline:none;
+          font-family: 'Mitr', sans-serif;
+        }
+      	button{
+          color:#885FCD;
+          width: 250px;
+          padding: 10px 20px;
+          margin:10px;
+          border-radius: 15px;
+          border:2px solid #ddd;
+          outline:none;
+          font-family: 'Mitr', sans-serif;
+        }
+        .warning{
+          font-family: 'Mitr', sans-serif;
+          color:#2d2f33;
+          border:1px solid #d1f442;
+          background-color: #d1f442;
+        }
+        .success{
+          font-family: 'Mitr', sans-serif;
+          color:#fff;
+          border:1px solid #91ba2a;
+          background-color: #91ba2a;
+        }
+        .register{
+          font-family: 'Mitr', sans-serif;
+          color:#fff;
+          border:1px solid #7c963c;
+          background-color: #7c963c;
+        }
+      	input[type='password']{
+          color:#885FCD;
+      		width: 50%;
+      		padding: 10px 20px;
+      		margin:10px;
+      		border-radius: 15px;
+      		border:2px solid #ddd;
+      		outline:none;
+      		font-family: 'Mitr', sans-serif;
+      	}
+        input[type='text']{
           color:#885FCD;
           width: 50%;
           padding: 10px 20px;
@@ -133,20 +161,9 @@
           outline:none;
           font-family: 'Mitr', sans-serif;
         }
-      	
-      	input[type='password']{
-          color:#885FCD;
-      		width: 40%;
-      		padding: 10px 20px;
-      		margin:10px;
-      		border-radius: 15px;
-      		border:2px solid #ddd;
-      		outline:none;
-      		font-family: 'Mitr', sans-serif;
-      	}
         input[type='number']{
           color:#885FCD;
-          width: 40%;
+          width: 50%;
           padding: 10px 20px;
           margin:10px;
           border-radius: 15px;
@@ -154,13 +171,29 @@
           outline:none;
           font-family: 'Mitr', sans-serif;
         }
-        table{
+       #export{
         font-family: 'Mitr', sans-serif;
-        background:linear-gradient(#4286f4,#5170a3);
+        background:#ddd;
         padding:10px 20px;
-        color:#fff;
-        border:3px solid #314f7f;
+        color:#4286f4;
+        border:3px solid #none;
         border-radius: 0px 0px 15px 15px;
+      }
+      #cho{
+        background-color: #4286f4;
+        border-radius: 15px;
+        padding: 10px 25px;
+      }
+      .cho{
+        cursor:pointer;
+        background-color: #4286f4;
+        border-radius: 15px;
+        padding: 10px 25px;
+        color:#fff;
+        transition:all 0.5s ease;
+      }
+      .cho:hover{
+        transform:scale(1.1,1.1);
       }
       tr{
         opacity: 0.4;
@@ -174,3 +207,5 @@
         opacity: 1;
       }
       
+        
+    
