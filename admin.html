@@ -10,8 +10,10 @@
      <script src="https://www.gstatic.com/firebasejs/5.7.3/firebase.js"></script>
      <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
      <script src='https://tanawa.github.io/chatfirebase/excelexportjs.js'></script>
-       <!--<link rel="stylesheet" type="text/css" href="https://tanawa.github.io/chatfirebase/style.css">-->
   <link rel="stylesheet" type="text/css" href="style.css">
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+  
 
      <script type="text/javascript">
      	var config = {
@@ -39,11 +41,11 @@
 </head>
 <body>
 <div class="nav">
-		<a href="index.html">หน้าหลัก</a><a href="index.html">ดูคะแนนการสอบ</a><a href="index.html">แจ้งลบ</a>
+		<a href="index.html">หน้าหลัก</a><a href="index.html">สร้างข้อสอบ</a><a href="index.html">ดูคะแนนการสอบ</a><a href="index.html">แจ้งลบ</a>
 	</div>
-	<center>
-		<br><button id="load">โหลดลงเครื่อง</button><br><br>
-		<table id="export">
+	<center><br>
+		<br><button id="load" class="button link" ><i class="fas fa-download"></i> โหลดลงเครื่อง</button><br><br>
+		<table id="export" class="pure-table">
          <tr><th>เลขประจำตัว</th><th>ชื่อ</th><th>นามสกุล</th><th>username</th><th>ชั้น</th><th>ห้อง</th><th>เลขที่</th></tr>
         </table>
 	</center>
@@ -57,5 +59,6 @@
      	});
      	
      </script>
+     <br>
 </body>
 </html>
