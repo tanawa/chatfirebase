@@ -8,13 +8,17 @@
 	<link href="https://fonts.googleapis.com/css?family=Mitr" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
       rel="stylesheet">
-  <!--<link rel="stylesheet" type="text/css" href="https://tanawa.github.io/chatfirebase/style.css">-->
   <link rel="stylesheet" type="text/css" href="style.css">
      <script src="https://www.gstatic.com/firebasejs/5.7.3/firebase.js"></script>
      <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
-     <script type="text/javascript">
+     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+     <link rel="stylesheet" type="text/css" href="semantic/dist/semantic.min.css">
+     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+     
+     
+    <script type="text/javascript">
 	
-        
+    
      	var nameuser="",userchoose="";
      	$(function(){
      		var numberstudent;
@@ -118,7 +122,7 @@ $("#main").css("display","none");
 	let ref=firebase.database().ref("test/");
 ref.once("value",function(snapshot){
 	snapshot.forEach(function(t){
-		$("#testout").append("<p onclick='choose(\""+t.key+"\")'>"+t.key+"</p>");
+		$("#testout").append("<p class='cho' onclick='choose(\""+t.key+"\")'>"+t.key+"</p>");
 	});
 },function(err){
 	
@@ -129,12 +133,12 @@ ref.once("value",function(snapshot){
      	});
 
 function save(){
+  let ref=firebase.database().ref("user/"+nameuser);
         if($("#usernameprofile").val()=="" || $("#passwordprofile").val()=="" || $("#year").val()=="" || $("#room").val()=="" || $("#name").val()=="" || $("#lastname").val()=="" || $("#number").val()=="" || $("#numberstudent").val()=="" ){
           console.log("กรอกข้อมูลไม่ครบ");
         }else{
-
         let ref=firebase.database().ref("user/"+nameuser);
-
+        
      ref.update({
       "username":$("#usernameprofile").val(),
       "password":$("#passwordprofile").val(),
@@ -145,8 +149,7 @@ function save(){
       "number":$("#number").val(),
       "numberstudent":$("#numberstudent").val()
         });
-     console.log("สำเร็จ");
-     alert("บันทึกสำเร็จ");
+     swal("แจ้งเตือน","บันทึกสำเร็จ","success");
       }
 }
   	
@@ -263,13 +266,13 @@ ref.once("value",function(snapshot){
 	$("#header").text(post);
     	if(snapshot.val()==null){
     		console.log("ไม่พบข้อการตอบกลับ");
-    		$("#ment>.content>center").prepend("<p>ไม่พบข้อการตอบกลับ</p>");
+    		$("#ment>.content>center").prepend("<p style='font-size:12px;'>ไม่พบข้อการตอบกลับ</p>");
     	}else{
             snapshot.forEach(function(ee){
 		    ee.forEach(function(tt){
             		let text=tt.val();
             		text=text.split("%058");
-            		$("#ment>.content>center").prepend("<div><p>"+text[1]+"</p><br><a>"+text[0]+"</a></div>");
+            		$("#ment>.content>center").prepend("<div class='ment'><p>"+text[1]+"</p><br><a>"+text[0]+"</a></div>");
             	});
 	        });
     	}
@@ -282,6 +285,7 @@ ref.once("value",function(snapshot){
   	let ref=firebase.database().ref("user/"+$("#username").val()+"/password");
     ref.once("value",function(snapshot){
     	if(snapshot.val()==$("#password").val()){
+        swal("แจ้งเตือน","รหัสผ่านถูกต้อง","success")
     		$("#login").css("display","none");
     		$("#main").css("display","block");
     		let ref=firebase.database().ref("user/"+$("#username").val()+"/username");
@@ -299,7 +303,7 @@ ref.once("value",function(snapshot){
 
     });
     	}else{
-            console.log("รหัสผ่านหรือผู้ใช้ผิด");
+            swal("แจ้งเตือน","รหัสผ่านผิด","warning");
     	}
     },function(err){
 
@@ -352,6 +356,8 @@ function deletes(element){
   	if(!$("#content").val()==""){
   		let ref=firebase.database().ref("post");
   	    ref.child($("#content").val()).set(name);
+        swal("แจ้งเตือน","โพตส์สำเร็จ","success");
+        $("#content").val()="";
 ref.once("value",function(snapshot){
 	$(".contentshow>center>div").remove();
 	$(".contentshow>center>a").remove();
@@ -376,15 +382,19 @@ ref.once("value",function(snapshot){
 	<div style="height: 5px;">
 	</div>
 	<center>
-		<img src="https://image.flaticon.com/icons/svg/253/253983.svg" width="20%">
+		<img src="https://img.live/images/2019/03/07/Untitled-1cc5ce.jpg" width="30%">
 		<br>
 		<a>เข้าสู่ระบบ เพื่อเข้าใช้งาน</a><br>
-	<input type="text" name="" placeholder="ชื่อผู้ใช้" id="username"><br>
-	<input type="password" name="" placeholder="รหัสผ่าน" id="password"><br>
+    
+	
 
-<img src="https://sv1.picz.in.th/images/2019/02/09/TEuuKP.png" width="200px" height="60px" onclick="logins()" style="border-radius: 15px;box-shadow: 0px 5px 0px 0px #484f8d;">
+<input type="text" name="" placeholder="ชื่อผู้ใช้" id="username"><br>
+<input type="password" name="" placeholder="รหัสผ่าน" id="password">
+<br><br>
+<button onclick="logins()" class="success"><i class="fas fa-arrow-circle-right"></i>  เข้าสู่ระบบ</button>
 <br>
-	<a href="https://tanawa.github.io/chatfirebase/register">สมัครสมาชิก</a>
+	<a href="register.html">สมัครสมาชิก</a>
+
 	</center>
 </div>
 
@@ -393,22 +403,24 @@ ref.once("value",function(snapshot){
 	<div class="nav">
 		<a class="m0">ข้อมูลส่วนตัว</a><a class="m1">กระทู้</a><a class="m2">ทำข้อสอบ</a><a href="">ออกจากระบบ</a>
 	</div>
-	<input type="text" name="" id="content"><button onclick="post()">ตั้งกระทู้</button>
-	<center><h3>รายชื่อกระทู้</h3></center>
+  <br><br>
+	<center><input type="text" name="" id="content" width="20%"><button onclick="post()">ตั้งกระทู้</button>
+    <h3>รายชื่อกระทู้</h3></center>
 	<div class="contentshow">
 		<center>
 			
 		</center>
-		<img src="https://image.flaticon.com/icons/svg/1141/1141771.svg" width="20%" style="position: absolute;bottom: 0;">
 	</div>
 </div>
 
 <div id="ment">
 	&nbsp;&nbsp;<a class="back">กลับหน้าหลัก</a>
-	<center>
-		<p>กระทู้ที่เลือก<p><p id="header"></p>
-	</center>
-	<hr>
+  <br><br>
+  <center>
+  <div style="margin:0;background-color: #4286f4;color:#fff;width: 80%;text-align: center;">
+		<p style="font-size: 12px;">กระทู้ที่เลือก<p><p id="header"></p>
+	</div>
+  </center>
 	<div class="content">
 		<center>
 		</center>
@@ -441,7 +453,7 @@ ref.once("value",function(snapshot){
 		<div id="testin">
 	
 	<h5 id="headerans">s</h5>
-	<table>
+	<table id="cho">
 		<tr>
 			<td>
 	<input type="checkbox" name="" value="1" id="b1" onclick="checkboxs()"><a id="ans1"></a>
@@ -513,9 +525,9 @@ ref.once("value",function(snapshot){
     <option value="19">ห้อง 19</option>
     <option value="20">ห้อง 20</option>
   </select><br>
-  <button onclick="save()">บันทึก</button>
-  <br>
-  <a href="admin.html"><button id="admin">ผู้ดูแล</button></a>
+  <button onclick="save()" class="success">บันทึก</button>
+
+  <a href="admin.html"><button id="admin" class="warning">ผู้ดูแล</button></a>
 	</center>
 <br>
 </div>
