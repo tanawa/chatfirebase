@@ -12,13 +12,10 @@
      <script src="https://www.gstatic.com/firebasejs/5.7.3/firebase.js"></script>
      <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
      <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-     <link rel="stylesheet" type="text/css" href="semantic/dist/semantic.min.css">
      <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-     
-     
     <script type="text/javascript">
 	
-    
+      var showhide=1;
      	var nameuser="",userchoose="";
      	$(function(){
      		var numberstudent;
@@ -372,6 +369,7 @@ ref.once("value",function(snapshot){
   	}
   	
   }
+  
      </script>
       <style type="text/css">
 
@@ -389,7 +387,8 @@ ref.once("value",function(snapshot){
 	
 
 <input type="text" name="" placeholder="ชื่อผู้ใช้" id="username"><br>
-<input type="password" name="" placeholder="รหัสผ่าน" id="password">
+<input type="password" name="" placeholder="รหัสผ่าน" id="password" style="width:25%;">
+<button id="hide" style="width: 20%;position:relative;"><div class="one"><i class="fas fa-eye"></i></div><div class="two"><i class="fas fa-eye-slash"></i></div></button>
 <br><br>
 <button onclick="logins()" class="success"><i class="fas fa-arrow-circle-right"></i>  เข้าสู่ระบบ</button>
 <br>
@@ -397,7 +396,24 @@ ref.once("value",function(snapshot){
 
 	</center>
 </div>
-
+<script type="text/javascript">
+  $(".one").css("display","block");
+    $(".two").css("display","none");
+  $("#hide").click(function(){
+    if(showhide==1){
+      showhide=2;
+      $(".one").css("display","none");
+    $(".two").css("display","block");
+    $("#password").prop("type","text");
+    }else{
+      showhide=1;
+      $(".one").css("display","block");
+    $(".two").css("display","none");
+    $("#password").prop("type","password");
+    }
+    
+  });
+</script>
 
 <div id="main">
 	<div class="nav">
@@ -448,7 +464,6 @@ ref.once("value",function(snapshot){
 	<center>
 		<br>
 		<img src="https://image.flaticon.com/icons/svg/1039/1039328.svg" width="10%"><br>
-	<H1>เลือกข้อสอบ</H1><br>
 		<div id="testout"></div>
 		<div id="testin">
 	
@@ -490,7 +505,7 @@ ref.once("value",function(snapshot){
 		<h3>ข้อมูลส่วนตัว</h3><br>
 		<a style="color:red;">**ไม่สามารถแก้ไขusernameได้**</a><br>
 		<input type="text" name="" placeholder="ชื่อผู้ใช้" id="usernameprofile" disabled="false"><br>
-	<input type="password" name="" placeholder="รหัสผ่าน" id="passwordprofile"><br>
+	<input type="password" name="" placeholder="รหัสผ่าน" id="passwordprofile" style="width:25%;"><button id="hides" style="width: 20%;position:relative;"><div class="one"><i class="fas fa-eye"></i></div><div class="two"><i class="fas fa-eye-slash"></i></div></button><br>
   <input type="text" name="" placeholder="ชื่อ" id="name"><br>
   <input type="text" name="" placeholder="นามสกุล" id="lastname"><br>
   <input type="number" name="" placeholder="เลขที่" id="number"><br>
@@ -529,6 +544,24 @@ ref.once("value",function(snapshot){
 
   <a href="admin.html"><button id="admin" class="warning">ผู้ดูแล</button></a>
 	</center>
+  <script type="text/javascript">
+  $(".one").css("display","block");
+    $(".two").css("display","none");
+  $("#hides").click(function(){
+    if(showhide==1){
+      showhide=2;
+      $(".one").css("display","none");
+    $(".two").css("display","block");
+    $("#passwordprofile").prop("type","text");
+    }else{
+      showhide=1;
+      $(".one").css("display","block");
+    $(".two").css("display","none");
+    $("#passwordprofile").prop("type","password");
+    }
+    
+  });
+</script>
 <br>
 </div>
 </body>
