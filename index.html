@@ -186,6 +186,8 @@ function loadtest(number){
 		responsiveVoice.speak("คุณได้"+tttt+"คะแนน","Thai Female");
 		let ref=firebase.database().ref("scoretest/"+choosetest+"/"+numberstudent);
 		ref.set({
+			"วิชา":choosetest,
+			"เลข":numberstudent,
 			"ข้อมูล":tttt
 		});
 		ref=firebase.database().ref("user/"+nameuser);
@@ -308,9 +310,9 @@ ref.once("value",function(snapshot){
 
   }
 function deletes(element){
-	let ref=firebase.database().ref("delete");
-	ref.push().set(element);
-	alert("แจ้งลบกระทู้เรียบร้อยแล้ว");
+	let ref=firebase.database().ref("delete/"+element);
+	ref.push("ข้อมูล").set(element);
+	swal("แจ้งเตือน","แจ้งลบกระทู้เรียบร้อยแล้ว","success");
 }
   function send(){
   	let names;
