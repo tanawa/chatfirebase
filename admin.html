@@ -16,6 +16,14 @@
   
 
      <script type="text/javascript">
+     function de(str){
+           let ref=firebase.database().ref("delete/"+str);
+           console.log(str);
+           ref.remove();
+           swal("แจ้งเตือน","ลบกระทู้เรียบร้อยแล้ว","success");
+           //$('#'+str).remove();
+        }
+     
      	var config = {
     apiKey: "AIzaSyC4dogP1e8BtQWf4YAilx-3HLTzRbB1lhQ",
     authDomain: "chat-3a9ca.firebaseapp.com",
@@ -24,15 +32,43 @@
     storageBucket: "chat-3a9ca.appspot.com",
     messagingSenderId: "707420213129"
   };
+  
   firebase.initializeApp(config);
   let ref=firebase.database().ref("user");
   ref.once("value",function(snapshot){
   	let data=Object.values(snapshot.val());
-  	console.log(data.length);
   	data.forEach(function(e){
-  		$("table").append("<tr><td>"+e.numberstudent+"</td><td>"+e.name+"</td><td>"+e.lastname+"</td><td>"+e.username+"</td><td>มัธยมศึกษาปีที่"+e.year+"</td><td>ห้องที่"+e.room+"</td><td>เลขที่"+e.number+"</td></tr>");
-    console.log(e.username);
+  		$("#export").append("<tr><td>"+e.numberstudent+"</td><td>"+e.name+"</td><td>"+e.lastname+"</td><td>"+e.username+"</td><td>มัธยมศึกษาปีที่"+e.year+"</td><td>ห้องที่"+e.room+"</td><td>เลขที่"+e.number+"</td></tr>");
   	});
+  },function(err){
+
+  });
+  ref=firebase.database().ref("scoretest");
+  ref.once("value",function(snapshot){
+     let data=Object.values(snapshot.val());
+     
+  	data.forEach(function(e){
+      let datas=Object.values(e);
+  	   datas.forEach(function(s){  
+        $("#scores").append("<tr><td>"+s.เลข+"</td><td>"+s.วิชา+"</td><td>"+s.ข้อมูล+"</td></tr>");
+  	   });
+  	});
+  },function(err){
+
+  });
+  ref=firebase.database().ref("delete");
+  ref.once("value",function(snapshot){
+   let datas=Object.values(snapshot.val());
+   
+  	   datas.forEach(function(s){  
+         let datas=Object.values(s);
+   
+   datas.forEach(function(e){ 
+      console.log(e); 
+      $(".con").append("<a onclick=\"de('"+e+"')\ >"+e+"</a><br>");
+   });
+  	   });
+
   },function(err){
 
   });
@@ -41,23 +77,66 @@
 </head>
 <body>
 <div class="nav">
-		<a href="index.html">หน้าหลัก</a><a href="index.html">สร้างข้อสอบ</a><a href="index.html">ดูคะแนนการสอบ</a><a href="index.html">แจ้งลบ</a>
-	</div>
-	<center><br>
-		<br><button id="load" class="button link" ><i class="fas fa-download"></i> โหลดลงเครื่อง</button><br><br>
-		<table id="export" class="pure-table">
-         <tr><th>เลขประจำตัว</th><th>ชื่อ</th><th>นามสกุล</th><th>username</th><th>ชั้น</th><th>ห้อง</th><th>เลขที่</th></tr>
-        </table>
-	</center>
+		<a id="Main">หน้าหลัก</a><a href="index.html">สร้างข้อสอบ</a><a id="score">ดูคะแนนการสอบ</a><a id="delect">แจ้งลบ</a>
+   </div>
+   <div class="Main">
+         <center><br>
+            <br><button id="load" class="button link" ><i class="fas fa-download"></i> โหลดลงเครื่อง</button><br><h3>รายชื่อสมาชิก</h3><br>
+            <table id="export" class="pure-table">
+               <tr><th>เลขประจำตัว</th><th>ชื่อ</th><th>นามสกุล</th><th>username</th><th>ชั้น</th><th>ห้อง</th><th>เลขที่</th></tr>
+              </table>
+         </center>
+   </div>
+   <div class="delect">
+      <center>
+            <br><br>
+            <h3>กระทู้ที่ถูกแจ้ง</h3>
+            
+            <div class="con">
+
+            </div>
+      </center>
+   </div>
+   <div class="score">
+         <center><br><br><button id="loads" class="button link" ><i class="fas fa-download"></i> โหลดลงเครื่อง</button><br><h3>คะแนนการสอบ</h3><br>
+            <table id="scores" class="pure-table">
+                  <tr><th>เลขประจำตัว</th><th>คะแนน</th><th>วิชา</th></tr>
+            </table>
+         </center>
+      </div>
+	
 <script>
      	$("#load").click(function(){
-     		console.log('s');
      		$("#export").excelexportjs({
      		containerid:"export",
      		datatype:'table'
      	});
+        });
+        $("#loads").click(function(){
+     		$("#scores").excelexportjs({
+     		containerid:"export",
+     		datatype:'table'
      	});
-     	
+        });
+        $(".Main").css("display","block");
+     $(".score").css("display","none");
+     $(".delect").css("display","none");
+        $("#Main").click(function(){
+         $(".Main").css("display","block");
+     $(".score").css("display","none");
+     $(".delect").css("display","none");
+        });
+        $("#score").click(function(){
+         $(".Main").css("display","none");
+     $(".score").css("display","block");
+     $(".delect").css("display","none");
+        });
+        $("#delect").click(function(){
+         $(".Main").css("display","none");
+     $(".score").css("display","none");
+     $(".delect").css("display","block");
+        });
+
      </script>
      <br>
 </body>
