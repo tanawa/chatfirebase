@@ -179,6 +179,14 @@
         border:3px solid #none;
         border-radius: 0px 0px 15px 15px;
       }
+      #scores{
+        font-family: 'Mitr', sans-serif;
+        background:#ddd;
+        padding:10px 20px;
+        color:#4286f4;
+        border:3px solid #none;
+        border-radius: 0px 0px 15px 15px;
+      }
       #cho{
         background-color: #4286f4;
         border-radius: 15px;
